@@ -1,0 +1,17 @@
+# Compilación y binarios
+cmake-build-debug/
+cmake-build-release/
+out/
+build/
+*.exe
+*.o
+*.obj
+
+# Archivos del IDE (CLion / VS Code)
+.idea/
+.vscode/
+*.swp
+
+# Archivos del Sistema
+.DS_Store
+Thumbs.db
