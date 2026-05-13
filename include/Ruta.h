@@ -1,12 +1,19 @@
-//
-// Created by arman on 12/05/2026.
-//
+#ifndef PROYECTO_RUTA_H        //Si no se ha definido antes, se usa la definición
+#define PROYECTO_RUTA_H        //Definir la clase ruta
 
-#ifndef PROYECTO_RUTA_H
-#define PROYECTO_RUTA_H
-
+#include <iostream>
+#include <string>
 
 class Ruta {
+protected:
+    std::string nombre;
+    std::string tipo;
+    bool activa = true;
+    std::string descripcion;
+public:
+    Ruta(const std::string& nombre, const std::string& tipo, bool act, const std::string& descripcion); //Constructor
+    virtual ~Ruta(); //Destructor virtual
+    void mostrarInformacion() const;
 };
 
 
