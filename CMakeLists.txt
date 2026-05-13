@@ -8,4 +8,8 @@ include_directories(include)
 add_executable(Proyecto main.cpp
         src/Ruta.cpp
         include/Ruta.h
+        src/RutaCentro.cpp
+        include/RutaCentro.h
+        src/RutaBarrio.cpp
+        include/RutaBarrio.h
 )

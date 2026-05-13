@@ -2,12 +2,13 @@
 // Created by arman on 12/05/2026.
 //
 
+#include <iostream>
 #include "../include/Ruta.h"
 
-Ruta::Ruta(const std::string& nombre, const std::string& tipo, bool act, const std::string& descripcion) : nombre(nombre),
-tipo(tipo), activa(act), descripcion(descripcion) {}
+Ruta::Ruta(std::string nombre, std::string tipo, const bool act, std::string descripcion) : nombre(std::move(nombre)), tipo(std::move(tipo)), activa(act), descripcion(std::move(descripcion)) {}
+//No se usa referencia al pasar los strings, en cambio se usa std::move para evitar copias innecesarias y solo mover las variables
 
-Ruta::~Ruta() {}
+Ruta::~Ruta() = default;
 
 void Ruta::mostrarInformacion() const {
     std::cout << "=== INFORMACION DE LA RUTA ===" << std::endl;
