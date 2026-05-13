@@ -1,5 +1,5 @@
 #include <iostream>
-#include "include/Ruta.h"
+#include "Ruta.h"
 
 int main() {
     std::cout << "Hello world!" << std::endl;
