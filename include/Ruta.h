@@ -17,7 +17,7 @@ public:
     virtual ~Ruta(); //Destructor virtual
     void agregarParadero(Paradero* nuevoParadero); //sistemaTransporte usa el constructor de paradero para crear un nuevo objeto y guardarlo en el vector
 
-    [[nodiscard]] std::vector<Paradero *> paraderos1() const;
+    [[nodiscard]] const std::vector<Paradero*>& paraderos1() const;
     [[nodiscard]] std::string nombre1() const;
     [[nodiscard]] std::string tipo1() const;
     [[nodiscard]] bool activa1() const;

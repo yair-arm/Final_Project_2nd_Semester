@@ -14,7 +14,7 @@ void Ruta::agregarParadero(Paradero* nuevoParadero) {
     paraderos.push_back(nuevoParadero);
 }
 
-std::vector<Paradero *> Ruta::paraderos1() const {
+const std::vector<Paradero *>& Ruta::paraderos1() const {
     return paraderos;
 }
 std::string Ruta::nombre1() const {

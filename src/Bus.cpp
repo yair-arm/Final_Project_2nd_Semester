@@ -15,14 +15,14 @@ void Bus::desvincularRuta() {
 }
 
 std::string Bus::placa1() const {
-    return placa;
+    return this->placa;
 }
 
 int Bus::capacidad1() const {
-    return capacidad;
+    return this->capacidad;
 }
 
 Ruta * Bus::ruta_asignada() const {
-    return rutaAsignada;
+    return this->rutaAsignada;
 }
 

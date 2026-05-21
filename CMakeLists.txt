@@ -18,4 +18,6 @@ add_executable(Proyecto main.cpp
         include/Paradero.h
         src/Bus.cpp
         include/Bus.h
+        src/Conductor.cpp
+        include/Conductor.h
 )
