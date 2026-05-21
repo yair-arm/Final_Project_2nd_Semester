@@ -16,4 +16,6 @@ add_executable(Proyecto main.cpp
         src/Horario.cpp
         src/Paradero.cpp
         include/Paradero.h
+        src/Bus.cpp
+        include/Bus.h
 )
