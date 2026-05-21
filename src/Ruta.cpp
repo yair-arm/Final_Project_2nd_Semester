@@ -10,11 +10,22 @@ Ruta::Ruta(std::string nombre, std::string tipo, const bool act, std::string des
 
 Ruta::~Ruta() = default;
 
-void Ruta::mostrarInformacion() const {
-    std::cout << "=== INFORMACION DE LA RUTA ===" << std::endl;
-    std::cout << "Nombre: " << nombre << std::endl;
-    std::cout << "Tipo:   " << tipo << std::endl;
-    std::cout << "Estado: " << (activa ? "Activa" : "Inactiva") << std::endl;
-    std::cout << "Desc:   " << descripcion << std::endl;
-    std::cout << "------------------------------" << std::endl;
+void Ruta::agregarParadero(Paradero* nuevoParadero) {
+    paraderos.push_back(nuevoParadero);
+}
+
+std::vector<Paradero *> Ruta::paraderos1() const {
+    return paraderos;
+}
+std::string Ruta::nombre1() const {
+    return nombre;
+}
+std::string Ruta::tipo1() const {
+    return tipo;
+}
+bool Ruta::activa1() const {
+    return activa;
+}
+std::string Ruta::descripcion1() const {
+    return descripcion;
 }

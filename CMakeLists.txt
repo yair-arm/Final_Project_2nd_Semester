@@ -12,4 +12,8 @@ add_executable(Proyecto main.cpp
         include/RutaCentro.h
         src/RutaBarrio.cpp
         include/RutaBarrio.h
+        include/Horario.h
+        src/Horario.cpp
+        src/Paradero.cpp
+        include/Paradero.h
 )

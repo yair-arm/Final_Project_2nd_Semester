@@ -1,9 +1,5 @@
-#include <iostream>
-#include "RutaCentro.h"
-
 int main() {
-    std::cout << "Hello world!" << std::endl;
-    const RutaCentro& centro = RutaCentro::getInstance();
-    centro.mostrarInformacion();
+    //const sistemaTransporte& sistema1 = sistemaTransporte::getInstance();
+    //sistema1.iniciarSistema();
     return 0;
 }

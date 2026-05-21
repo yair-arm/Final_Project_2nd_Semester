@@ -1,8 +1,6 @@
 //
 // Created by arman on 12/05/2026.
 //
-
-#include <iostream>
 #include "../include/RutaCentro.h"
 
 // Definimos los valores fijos de la ruta centro
@@ -14,9 +12,8 @@ RutaCentro& RutaCentro::getInstance() {
     static RutaCentro instancia;
     return instancia;
 }
-void RutaCentro::mostrarInformacion() const {
-    Ruta::mostrarInformacion();
-    std::cout << "Frecuencia: " << frecuencia << " minutos" << std::endl;
-    std::cout << "------------------------------" << std::endl;
+
+int RutaCentro::frecuencia1() const {
+    return frecuencia;
 }
 

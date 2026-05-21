@@ -19,7 +19,9 @@ public:
     // Evitar que se copie la instancia
     RutaCentro(const RutaCentro&) = delete;
     void operator=(const RutaCentro&) = delete;
-    void mostrarInformacion() const override;
+    ~RutaCentro() override = default;
+
+    [[nodiscard]] int frecuencia1() const;
 };
 
 #endif //PROYECTO_RUTACENTRO_H
