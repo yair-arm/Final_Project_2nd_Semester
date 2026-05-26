@@ -5,7 +5,8 @@
 #include "../include/Bus.h"
 #include "../include/Conductor.h"
 
-Bus::Bus(std::string placa, const int _cap, Ruta* _rutaA) : placa(std::move(placa)), capacidad(_cap), rutaAsignada(_rutaA){}
+Bus::Bus(std::string placa, const int _cap, Ruta* _rutaA, bool _disponible, std::string _obser) :
+placa(std::move(placa)), capacidad(_cap), rutaAsignada(_rutaA), disponible(_disponible), observacion(std::move(_obser)) {}
 
 void Bus::asignarRuta(Ruta *nuevaRuta) {
     this->rutaAsignada = nuevaRuta;
@@ -25,6 +26,14 @@ void Bus::desvincularConductor() {
 
 std::string Bus::placa1() const {
     return this->placa;
+}
+
+bool Bus::disponible1() const {
+    return disponible;
+}
+
+std::string Bus::observacion1() const {
+    return observacion;
 }
 
 int Bus::capacidad1() const {
