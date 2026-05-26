@@ -20,4 +20,6 @@ add_executable(Proyecto main.cpp
         include/Bus.h
         src/Conductor.cpp
         include/Conductor.h
+        src/Usuario.cpp
+        include/Usuario.h
 )
