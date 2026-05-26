@@ -5,7 +5,10 @@
 #ifndef PROYECTO_CONDUCTOR_H
 #define PROYECTO_CONDUCTOR_H
 #include <string>
-#include "Bus.h"
+
+//Se debe incluir ambas clases en los archivos cpp mas no en los archivos .h
+class Bus; //forward declaration para evitar bucles de includes infinitos
+
 
 class Conductor {
 private:

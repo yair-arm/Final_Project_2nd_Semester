@@ -18,7 +18,7 @@ public:
     ~RutaBarrio() override = default;
     void agregarHorario(Horario* nuevoHorario); //Agregar nuevos horarios
     [[nodiscard]] const std::vector<Horario*>& getHorarios() const; //Metodo que devuelve el vector horarios de cada rutaBarrio
-    [[nodiscard]] std::string sector1() const;
+    [[nodiscard]] const std::string sector1() const;
 };
 
 

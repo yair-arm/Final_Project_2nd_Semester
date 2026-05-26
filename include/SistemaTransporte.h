@@ -10,7 +10,6 @@
 #include "Bus.h"
 #include <nlohmann/json.hpp>
 #include "Conductor.h"
-#include "Horario.h"
 #include <string>
 #include <fstream>
 

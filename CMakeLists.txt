@@ -34,8 +34,8 @@ add_executable(Proyecto main.cpp
         src/Usuario.cpp
         include/Usuario.h
         include/SistemaTransporte.h
-        src/IncidenciaExcepcion.cpp
-        include/IncidenciaExcepcion.h
+        src/IncidenciaExepcion.cpp
+        include/IncidenciaExepcion.h
 )
 
 # 4. Vincular la librería JSON descargada con tu proyecto ejecutable
