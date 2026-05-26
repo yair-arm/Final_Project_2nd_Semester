@@ -5,7 +5,10 @@
 #include <iostream>
 #include "../include/Ruta.h"
 
-Ruta::Ruta(std::string nombre, std::string tipo, const bool act, std::string descripcion) : nombre(std::move(nombre)), tipo(std::move(tipo)), activa(act), descripcion(std::move(descripcion)) {}
+Ruta::Ruta(std::string nombre, std::string tipo, const bool act, std::string descripcion) : nombre(std::move(nombre)),
+    tipo(std::move(tipo)), activa(act), descripcion(std::move(descripcion)) {
+}
+
 //No se usa referencia al pasar los strings, en cambio se usa std::move para evitar copias innecesarias y solo mover las variables
 
 Ruta::~Ruta() = default;
