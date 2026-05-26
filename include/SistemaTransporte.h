@@ -8,11 +8,10 @@
 #include <vector>
 #include "Ruta.h"
 #include "Bus.h"
-#include <nlohmann/json>
+#include <nlohmann/json.hpp>
 #include "Conductor.h"
 #include "Horario.h"
 #include <string>
-#include <\cmake-build-debvug\_deps\json-src\include>
 #include <fstream>
 
 class SistemaTransporte {
