@@ -8,7 +8,6 @@
 #include "Ruta.h"
 #include "Bus.h"
 #include "Conductor.h"
-#include "Horario.h"
 #include <string>
 #include <\cmake-build-debvug\_deps\json-src\include>
 #include <fstream>
