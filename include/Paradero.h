@@ -13,7 +13,6 @@ private:
 public:
     Paradero(std::string nom, std::string ubi);
     ~Paradero() = default;
-    void mostrarDetalleParadero() const;
 
     [[nodiscard]] std::string nombre1() const;
     [[nodiscard]] std::string ubicacion1() const;
