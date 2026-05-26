@@ -15,7 +15,13 @@ void Bus::desvincularRuta() {
     this->rutaAsignada = nullptr;
 }
 
-//Toca aqui definir asignar conductor y desvincular
+void Bus::asignarConductor(Conductor *nuevoConductor) {
+    this->conductorAsignado = nuevoConductor;
+}
+
+void Bus::desvincularConductor() {
+    this->conductorAsignado = nullptr;
+}
 
 std::string Bus::placa1() const {
     return this->placa;

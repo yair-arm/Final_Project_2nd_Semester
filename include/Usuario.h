@@ -19,5 +19,4 @@ public:
     [[nodiscard]] bool carnet1() const;
 };
 
-
 #endif //PROYECTO_USUARIO_H

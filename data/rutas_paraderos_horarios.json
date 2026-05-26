@@ -1,0 +1,333 @@
+[
+  {
+    "tipo": "centro",
+    "nombre": "Ruta Parque",
+    "activa": true,
+    "descripcion": "Ruta fija del centro de la ciudad.",
+    "paraderos": [
+      "Parque de Los Estudiantes",
+      "Unicentro paradero buses públicos",
+      "Tecniguayas",
+      "Frente al Colegio Industrial",
+      "Paradero de buses de Makro",
+      "Paradero de servicio urbano de La Alborada",
+      "Universidad Cooperativa de Colombia",
+      "Estación de servicios Primax Ocoa",
+      "Entrada Barcelona"
+    ]
+  },
+  {
+    "tipo": "barrio",
+    "nombre": "Amarilo",
+    "activa": true,
+    "descripcion": "Paradero Amarilo diagonal a droguería Farmameta. Paradero de transporte público entrada aptos. de Amarilo.",
+    "sector": "Ciudadela Amarilo",
+    "paraderos": [
+      "Paradero Amarilo diagonal a droguería Farmameta",
+      "Paradero entrada aptos. de Amarilo",
+      "Frente a la estación de servicio Primax de La Coralina",
+      "Éxito Express de Rosa Blanca frente al CDA Andino",
+      "Universidad de los Llanos Puerta 2"
+    ],
+    "horarios": [
+      { "hora": "05", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "06", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "07", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "08", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "13", "minuto": "25", "estado": "Salida Barrio" },
+      { "hora": "11", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "12", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "15", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "16", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "18", "minuto": "10", "estado": "Salida Universidad" }
+    ]
+  },
+  {
+    "tipo": "barrio",
+    "nombre": "La Grama",
+    "activa": true,
+    "descripcion": "Salida desde el barrio en el sector de 4 Parques y Picadas y Algo Más.",
+    "sector": "La Grama",
+    "paraderos": [
+      "Diag. Estación de servicio Texaco frente al Monumento al Coleo",
+      "Aptos. frente a La Toyota",
+      "Droguería Providencia",
+      "Hotel Rosado",
+      "Iglesia Santa María Reina solo de subida",
+      "Universidad de los Llanos Puerta 2"
+    ],
+    "horarios": [
+      { "hora": "05", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "06", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "07", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "08", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "11", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "13", "minuto": "25", "estado": "Salida Barrio" },
+      { "hora": "11", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "12", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "15", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "16", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "18", "minuto": "10", "estado": "Salida Universidad" }
+    ]
+  },
+  {
+    "tipo": "barrio",
+    "nombre": "Maracos",
+    "activa": true,
+    "descripcion": "Montallantas de la bomba Avenida Maracos.",
+    "sector": "Avenida Maracos",
+    "paraderos": [
+      "Montallantas de la bomba Avenida Maracos",
+      "Panadería frente al lavadero Estero",
+      "Esquina parque Mi Llanura",
+      "Glorieta Terminal",
+      "Montallantas Alto El Pinilla",
+      "Frente a La Policía Metropolitana",
+      "Entrada a Kirpas en los paraderos públicos",
+      "Lavadero 24 hrs",
+      "Pan Rolo",
+      "Universidad de los Llanos Puerta 2"
+    ],
+    "horarios": [
+      { "hora": "05", "minuto": "10", "estado": "Salida Barrio" },
+      { "hora": "06", "minuto": "10", "estado": "Salida Barrio" },
+      { "hora": "07", "minuto": "10", "estado": "Salida Barrio" },
+      { "hora": "08", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "11", "minuto": "20", "estado": "Recoge y deja estudiantes" },
+      { "hora": "13", "minuto": "25", "estado": "Salida Barrio" },
+      { "hora": "11", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "12", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "15", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "16", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "18", "minuto": "10", "estado": "Salida Universidad" }
+    ]
+  },
+  {
+    "tipo": "barrio",
+    "nombre": "Porfía",
+    "activa": true,
+    "descripcion": "Yositoko 5ta Etapa de La Madrid. Entrada de los aptos. La Madrid.",
+    "sector": "Porfía / La Madrid",
+    "paraderos": [
+      "Yositoko 5ta Etapa de La Madrid",
+      "Entrada de los aptos. La Madrid",
+      "Entrada etapa 4 de La Madrid",
+      "Almacen Los Chopos",
+      "Salida Colegio Las Palmas",
+      "Banco Congente",
+      "Consuerte diag. Iglesia de Porfía",
+      "Bomba en glorieta Porfía",
+      "Segundo puente peatonal Samán de Rivera",
+      "Universidad de los Llanos Puerta 2"
+    ],
+    "horarios": [
+      { "hora": "05", "minuto": "10", "estado": "Salida Barrio" },
+      { "hora": "06", "minuto": "10", "estado": "Salida Barrio" },
+      { "hora": "07", "minuto": "10", "estado": "Salida Barrio" },
+      { "hora": "08", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "12", "minuto": "00", "estado": "Entrada aptos. La Madrid" },
+      { "hora": "13", "minuto": "20", "estado": "Entrada aptos. La Madrid" },
+      { "hora": "15", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "16", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "18", "minuto": "10", "estado": "Salida Universidad" }
+    ]
+  },
+  {
+    "tipo": "barrio",
+    "nombre": "Postobón",
+    "activa": true,
+    "descripcion": "Almacén Yamaha.",
+    "sector": "Postobón",
+    "paraderos": [
+      "Almacén Yamaha",
+      "Entrada biblioteca Cofrem",
+      "Fresilandia",
+      "Puente peatonal del Sikuani",
+      "Paradero servicio público de aptos. Cantarrana",
+      "Universidad de los Llanos Puerta 2"
+    ],
+    "horarios": [
+      { "hora": "05", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "06", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "07", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "08", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "11", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "13", "minuto": "25", "estado": "Salida Barrio" },
+      { "hora": "11", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "12", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "15", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "16", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "18", "minuto": "10", "estado": "Salida Universidad" }
+    ]
+  },
+  {
+    "tipo": "barrio",
+    "nombre": "Covisán",
+    "activa": true,
+    "descripcion": "Frente a la droguería del Estero 24 Hrs.",
+    "sector": "Covisán",
+    "paraderos": [
+      "Frente a la droguería del Estero 24 Hrs",
+      "Bomba de Covisán",
+      "Paradero frente aptos. del Salitre",
+      "Apartamentos Amarilo vía al Campanario",
+      "Asadero frente al Campanario",
+      "Entrada mega colegio San Antonio",
+      "Frente a la Policia Metropolitana",
+      "Kirpan panadería",
+      "Lavadero 24 hras",
+      "Frente a Pan Rolo",
+      "Universidad de los Llanos Puerta 2"
+    ],
+    "horarios": [
+      { "hora": "05", "minuto": "10", "estado": "Salida Barrio" },
+      { "hora": "06", "minuto": "10", "estado": "Salida Barrio" },
+      { "hora": "07", "minuto": "10", "estado": "Salida Barrio" },
+      { "hora": "08", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "11", "minuto": "20", "estado": "Recoge y deja estudiantes" },
+      { "hora": "13", "minuto": "25", "estado": "Salida Barrio" },
+      { "hora": "11", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "12", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "15", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "16", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "18", "minuto": "10", "estado": "Salida Universidad" }
+    ]
+  },
+  {
+    "tipo": "barrio",
+    "nombre": "Villacentro",
+    "activa": true,
+    "descripcion": "Portería principal del CC Villacentro, entrada del supermercado Olímpica.",
+    "sector": "Villacentro",
+    "paraderos": [
+      "Portería principal del CC Villacentro",
+      "Mazorcadas frente al edificio de la Fiscalía",
+      "Paradero de servicio público frente a la pizzería Domino's",
+      "Droguería La Rebaja frente a Sipote Malteada",
+      "Universidad de los Llanos Puerta 2"
+    ],
+    "horarios": [
+      { "hora": "05", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "06", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "07", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "08", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "11", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "13", "minuto": "25", "estado": "Salida Barrio" },
+      { "hora": "11", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "12", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "15", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "16", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "18", "minuto": "10", "estado": "Salida Universidad" }
+    ]
+  },
+  {
+    "tipo": "barrio",
+    "nombre": "Terminal",
+    "activa": true,
+    "descripcion": "Frente al Banco W de Hato Grande.",
+    "sector": "Terminal de Transportes",
+    "paraderos": [
+      "Frente al Banco W de Hato Grande",
+      "Puesto de salud frente a Olímpica",
+      "Semáforo del Manantial",
+      "Semáforo de la morgue",
+      "Motores Kumis",
+      "Colanta",
+      "Semáforo de los aptos. Cerro Campestre",
+      "Universidad de los Llanos Puerta 2"
+    ],
+    "horarios": [
+      { "hora": "05", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "06", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "07", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "08", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "11", "minuto": "20", "estado": "Recoge y deja estudiantes" },
+      { "hora": "13", "minuto": "25", "estado": "Salida Barrio" },
+      { "hora": "11", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "12", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "15", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "16", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "18", "minuto": "10", "estado": "Salida Universidad" }
+    ]
+  },
+  {
+    "tipo": "barrio",
+    "nombre": "Reliquia",
+    "activa": true,
+    "descripcion": "Puesto de salud de la Reliquia.",
+    "sector": "La Reliquia",
+    "paraderos": [
+      "Puesto de salud de la Reliquia",
+      "El Campanario",
+      "Mega colegio San Antonio",
+      "Frente a la Policía",
+      "Paradero de Kirpan",
+      "Lavadero 24 hras",
+      "Pan Rolo",
+      "Universidad de los Llanos Puerta 2"
+    ],
+    "horarios": [
+      { "hora": "05", "minuto": "10", "estado": "Salida Barrio" },
+      { "hora": "07", "minuto": "10", "estado": "Salida Barrio" },
+      { "hora": "08", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "15", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "16", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "18", "minuto": "10", "estado": "Salida Universidad" }
+    ]
+  },
+  {
+    "tipo": "barrio",
+    "nombre": "Viva",
+    "activa": true,
+    "descripcion": "Semáforo CC Viva, Villa Bolívar.",
+    "sector": "Centro Comercial Viva",
+    "paraderos": [
+      "Semáforo CC Viva",
+      "Boutique Revival",
+      "Esquina Inmobiliaria Casa Jerez",
+      "Esquina de la droguería de la Calle 37-45",
+      "Esquina panadería La Cosmopolita",
+      "Esquina de la cra 28f",
+      "Universidad de los Llanos Puerta 2"
+    ],
+    "horarios": [
+      { "hora": "05", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "06", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "07", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "08", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "11", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "13", "minuto": "25", "estado": "Salida Barrio" },
+      { "hora": "11", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "12", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "15", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "16", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "18", "minuto": "10", "estado": "Salida Universidad" }
+    ]
+  },
+  {
+    "tipo": "barrio",
+    "nombre": "Montecarlo",
+    "activa": true,
+    "descripcion": "Debajo del puente peatonal Llanolindo sentido Bogotá - Villavicencio. La salida de la 1:25 p.m. inicia específicamente en la rotonda de Montecarlo.",
+    "sector": "Montecarlo / Llanolindo",
+    "paraderos": [
+      "Bahía de la bomba Primax de Serramonte",
+      "Glorieta de la Rochela",
+      "Puente peatonal Catumare",
+      "Universidad de los Llanos Puerta 2"
+    ],
+    "horarios": [
+      { "hora": "05", "minuto": "10", "estado": "Salida Barrio" },
+      { "hora": "06", "minuto": "10", "estado": "Salida Barrio" },
+      { "hora": "07", "minuto": "10", "estado": "Salida Barrio" },
+      { "hora": "08", "minuto": "10", "estado": "Salida Barrio" },
+      { "hora": "11", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "13", "minuto": "25", "estado": "Salida Barrio (Inicia Rotonda)" },
+      { "hora": "11", "minuto": "00", "estado": "Salida Universidad (Combinada con Amarilo)" },
+      { "hora": "12", "minuto": "00", "estado": "Salida Universidad (Va por el Corredor Ecológico)" },
+      { "hora": "15", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "16", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "18", "minuto": "10", "estado": "Salida Universidad" }
+    ]
+  }
+]

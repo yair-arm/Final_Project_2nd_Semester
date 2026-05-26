@@ -1,0 +1,187 @@
+[
+  {
+    "placa": "SKP-421",
+    "capacidad": 40,
+    "ruta": "Ruta Parque",
+    "disponible": true,
+    "observacion": "",
+    "conductor": {
+      "id": "C01",
+      "nombre": "Carlos Alberto Mendoza",
+      "licencia": "L-98234",
+      "telefono": "3115432109"
+    }
+  },
+  {
+    "placa": "TXZ-893",
+    "capacidad": 40,
+    "ruta": "Ruta Parque",
+    "disponible": true,
+    "observacion": "",
+    "conductor": {
+      "id": "C02",
+      "nombre": "Juan Carlos Beltrán",
+      "licencia": "L-45321",
+      "telefono": "3208765432"
+    }
+  },
+  {
+    "placa": "ULL-021",
+    "capacidad": 35,
+    "ruta": "Amarilo",
+    "disponible": true,
+    "observacion": "",
+    "conductor": {
+      "id": "C03",
+      "nombre": "Pedro Alfonso Rocha",
+      "licencia": "L-12903",
+      "telefono": "3154567890"
+    }
+  },
+  {
+    "placa": "SPK-554",
+    "capacidad": 35,
+    "ruta": "La Grama",
+    "disponible": true,
+    "observacion": "",
+    "conductor": {
+      "id": "C05",
+      "nombre": "Luis Eduardo Garzón",
+      "licencia": "L-65432",
+      "telefono": "3129876543"
+    }
+  },
+  {
+    "placa": "WTL-712",
+    "capacidad": 40,
+    "ruta": "Maracos",
+    "disponible": true,
+    "observacion": "",
+    "conductor": {
+      "id": "C07",
+      "nombre": "Francisco José Palacios",
+      "licencia": "L-87654",
+      "telefono": "3183456789"
+    }
+  },
+  {
+    "placa": "TTA-304",
+    "capacidad": 45,
+    "ruta": "Porfía",
+    "disponible": true,
+    "observacion": "",
+    "conductor": {
+      "id": "C09",
+      "nombre": "Álvaro Enrique Forero",
+      "licencia": "L-54321",
+      "telefono": "3165678901"
+    }
+  },
+  {
+    "placa": "ULL-054",
+    "capacidad": 35,
+    "ruta": "Postobón",
+    "disponible": true,
+    "observacion": "",
+    "conductor": {
+      "id": "C11",
+      "nombre": "José Gabriel Ortiz",
+      "licencia": "L-43210",
+      "telefono": "3137890123"
+    }
+  },
+  {
+    "placa": "MXL-219",
+    "capacidad": 40,
+    "ruta": "Covisán",
+    "disponible": true,
+    "observacion": "",
+    "conductor": {
+      "id": "C13",
+      "nombre": "Nelson Giovanny Pinto",
+      "licencia": "L-34567",
+      "telefono": "3229012345"
+    }
+  },
+  {
+    "placa": "SLK-881",
+    "capacidad": 35,
+    "ruta": "Villacentro",
+    "disponible": true,
+    "observacion": "",
+    "conductor": {
+      "id": "C15",
+      "nombre": "Fernando Alberto Soler",
+      "licencia": "L-21098",
+      "telefono": "3111234567"
+    }
+  },
+  {
+    "placa": "ULL-102",
+    "capacidad": 40,
+    "ruta": "Terminal",
+    "disponible": true,
+    "observacion": "",
+    "conductor": {
+      "id": "C17",
+      "nombre": "Jaime de Jesús Agudelo",
+      "licencia": "L-76543",
+      "telefono": "3153456789"
+    }
+  },
+  {
+    "placa": "TXA-415",
+    "capacidad": 35,
+    "ruta": "Reliquia",
+    "disponible": true,
+    "observacion": "",
+    "conductor": {
+      "id": "C19",
+      "nombre": "William Giovany Parrado",
+      "licencia": "L-01234",
+      "telefono": "3175678901"
+    }
+  },
+  {
+    "placa": "SPQ-992",
+    "capacidad": 35,
+    "ruta": "Viva",
+    "disponible": true,
+    "observacion": "",
+    "conductor": {
+      "id": "C21",
+      "nombre": "Héctor Fabio Jiménez",
+      "licencia": "L-67812",
+      "telefono": "3197890123"
+    }
+  },
+  {
+    "placa": "SYF-105",
+    "capacidad": 40,
+    "ruta": "Montecarlo",
+    "disponible": true,
+    "observacion": "",
+    "conductor": {
+      "id": "C23",
+      "nombre": "Danilo Enrique Suárez",
+      "licencia": "L-89054",
+      "telefono": "3212345678"
+    }
+  },
+  {
+    "placa": "ULL-013",
+    "capacidad": 35,
+    "ruta": "",
+    "disponible": false,
+    "observacion": "Falla en el sistema de frenos",
+    "conductor": null
+  },
+  {
+    "placa": "WKA-663",
+    "capacidad": 45,
+    "ruta": "",
+    "disponible": false,
+    "observacion": "Mantenimiento preventivo de motor",
+    "conductor": null
+  }
+]
