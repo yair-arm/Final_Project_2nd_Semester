@@ -9,27 +9,36 @@
 #include "Ruta.h"
 #include "Bus.h"
 #include <nlohmann/json.hpp>
-#include "Conductor.h"
 #include <string>
-#include <fstream>
+
+class Interfaz;
 
 class SistemaTransporte {
 private:
     std::vector<Ruta*> rutas;
     std::vector<Bus*> buses;
+    Interfaz* interfazGrafica;
+
+    const std::string ARCHIVO_BUSES = "data/buses_conductores.json";
+    const std::string ARCHIVO_RUTAS = "data/rutas.json";
+
     SistemaTransporte();
     void cargarDatosDesdeArchivo();
+    void procesarYCrearRutas(const nlohmann::json& jRutas);
+    void procesarYCrearBuses(const nlohmann::json& jBuses);
 
 public:
-    static SistemaTransporte& getInstance(); //getter para el constructor y mediante ella crear la única instancia de la clase
-    ~SistemaTransporte(); //el destructor no van con default pues su comportamiento debe definirse dentro del cpp, ya que este contiene punteros, vectores...
+    SistemaTransporte(const SistemaTransporte&) = delete;
+    void operator=(const SistemaTransporte&) = delete;
 
-    void procesarCrearBusConductor(Bus* nuevoBus, Conductor* nuevoConductor);
-    void registrarRuta(const nlohmann::json& jRuta);
-    void cargarHorariosDesdeArchivo();
-    void asignarRutaABus(std::string placa, std::string nombreRuta);
-    void generarReporte();
+    static SistemaTransporte& getInstance();
+    ~SistemaTransporte();
+    void iniciarSistema();
 
+    [[nodiscard]] const std::vector<Bus*>& getBuses() const;
+    [[nodiscard]] const std::vector<Ruta*>& getRutas() const;
+    [[nodiscard]] Bus* consultarBusPorPlaca(const std::string& placa) const;
+    [[nodiscard]] Ruta* consultarRutaPorNombre(const std::string& nombre) const;
 };
 
 
