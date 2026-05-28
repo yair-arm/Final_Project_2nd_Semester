@@ -21,15 +21,15 @@ SistemaTransporte& SistemaTransporte::getInstance() {
 
 SistemaTransporte::~SistemaTransporte() {
     // Destruir buses, al llamar estos destructores, automaticamente también se destruyen los conductores
-    for (const auto* Bus : buses) {
-            delete Bus;
+    for (const auto* bus : buses) {
+            delete bus;
     }
     buses.clear();
 
     // Destruir rutas, esto elimina los horarios para rutas de barrio porque así está específicado
-    for (auto* Ruta: rutas) {
-        if (dynamic_cast<RutaCentro*>(Ruta) == nullptr) {
-            delete Ruta;
+    for (auto* ruta: rutas) {
+        if (dynamic_cast<RutaCentro*>(ruta) == nullptr) { //Pregunta si el puntero que se está evaluando es RutaCentro, si es así lo ignora y no hace doble eliminación para evitar crasheos
+            delete ruta;
         }
     }
     rutas.clear();
@@ -67,7 +67,6 @@ Ruta* SistemaTransporte::consultarRutaPorNombre(const std::string& nombre) const
 //Inicialización del metodo complejo para crear nuevas rutas, usa polimorfimo y memoria dinámica para decidir
 //en tiempo de ejecución qué estructura de creación de instancias seguir según las instrucciones establecidas anteriormente
 //Además de parsear o mapear los campos de los json a los atributos correspondientes de las rutas, los horarios y los paraderos
-//Pendiente su revisión
 void SistemaTransporte::procesarYCrearRutas(const nlohmann::json& jRutas) {
     for (const auto& jRuta : jRutas) {
         const std::string tipo = jRuta["tipo"];

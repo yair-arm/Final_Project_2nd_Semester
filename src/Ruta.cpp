@@ -11,7 +11,12 @@ Ruta::Ruta(std::string nombre, std::string tipo, const bool act, std::string des
 
 //No se usa referencia al pasar los strings, en cambio se usa std::move para evitar copias innecesarias y solo mover las variables
 
-Ruta::~Ruta() = default;
+Ruta::~Ruta() {
+    for (const auto* paradero : paraderos) {
+        delete paradero;
+    }
+    paraderos.clear();
+}
 
 void Ruta::agregarParadero(Paradero* nuevoParadero) {
     paraderos.push_back(nuevoParadero);

@@ -5,7 +5,7 @@
 #include "../include/Bus.h"
 #include "../include/Conductor.h"
 
-Bus::Bus(std::string placa, int _cap, Ruta* _rutaA, bool _disponible, std::string _obser) :
+Bus::Bus(std::string placa, const int _cap, Ruta* _rutaA, const bool _disponible, std::string _obser) :
 placa(std::move(placa)), capacidad(_cap), rutaAsignada(_rutaA), disponible(_disponible), observacion(std::move(_obser)) {}
 
 Bus::~Bus() {
