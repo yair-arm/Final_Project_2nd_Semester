@@ -34,6 +34,7 @@ add_executable(Proyecto main.cpp
         src/Usuario.cpp
         include/Usuario.h
         include/SistemaTransporte.h
+        src/SistemaTransporte.cpp
         src/IncidenciaExepcion.cpp
         include/IncidenciaExepcion.h
 )
