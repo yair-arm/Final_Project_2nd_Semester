@@ -22,9 +22,7 @@ SistemaTransporte& SistemaTransporte::getInstance() {
 SistemaTransporte::~SistemaTransporte() {
     // Destruir buses, al llamar estos destructores, automaticamente también se destruyen los conductores
     for (const auto* Bus : buses) {
-        if (Bus != nullptr){
             delete Bus;
-        }
     }
     buses.clear();
 
