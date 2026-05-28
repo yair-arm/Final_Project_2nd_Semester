@@ -18,7 +18,7 @@ private:
     std::string observacion;
 public:
     Bus(std::string placa, int _cap, Ruta* _rutaA, bool _disponible, std::string _obser);
-    ~Bus() = default;
+    ~Bus();
     void asignarRuta(Ruta* nuevaRuta);
     void asignarConductor(Conductor* nuevoConductor);
     void desvincularRuta();
