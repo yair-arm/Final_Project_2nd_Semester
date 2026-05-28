@@ -21,10 +21,10 @@ public:
     ~IncidenciaExcepcion() override;
 
     // Método para tu reporte personalizado
-    std::string infoExcepcion() const;
+    [[nodiscard]] std::string infoExcepcion() const;
 
     // El "noexcept" promete al compilador que esta función no fallará
-    const char* what() const noexcept override;
+    [[nodiscard]] const char* what() const noexcept override;
 };
 
 #endif //PROYECTO_INCIDENCIAEXCEPCION_H
