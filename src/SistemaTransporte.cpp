@@ -28,18 +28,16 @@ SistemaTransporte::~SistemaTransporte() {
     buses.clear();
 
     // Destruir rutas, esto elimina los horarios para rutas de barrio porque así está específicado
-    for (auto* ruta: rutas) {
-        if (dynamic_cast<RutaCentro*>(ruta) == nullptr) { //Pregunta si el puntero que se está evaluando es RutaCentro, si es así lo ignora y no hace doble eliminación para evitar crasheos
-            delete ruta;
-        }
+    for (const auto* ruta: rutas) {
+            delete ruta; //No es necesario el <dynamic cast> debido a que el vector de rutas según el ajuste ahora solo contiene rutas de barrio
     }
     rutas.clear();
 
-    //delete interfazGrafica; //Comentado debido a que aun no existe una interfaz la cual destruir, temporalmente
+    //delete interfazGrafica; //Comentado debido a que aún no existe una interfaz la cual destruir, temporalmente
     //interfazGrafica = nullptr;
 }
 
-const std::vector<Ruta*>& SistemaTransporte::getRutas() const { //Getter del vector de butas
+const std::vector<Ruta*>& SistemaTransporte::getRutas() const { //Getter del vector de rutas
     return rutas;
 }
 
@@ -47,7 +45,7 @@ const std::vector<Bus*>& SistemaTransporte::getBuses() const { //Getter del vect
     return buses;
 }
 
-Bus* SistemaTransporte::consultarBusPorPlaca(const std::string& placa) const { //Este metodo se encarga de buscar el la placa ingresada dentro del vector de buses
+Bus* SistemaTransporte::consultarBusPorPlaca(const std::string& placa) const { //Este metodo se encarga de buscar la placa ingresada dentro del vector de buses
 //De SistemaTransporte, lo hace por medio de un for, si la encuentra, retorna el bus, si no, retorna nullptr
     for (auto* bus : buses) {
         if (bus->placa1() == placa) {
@@ -58,12 +56,19 @@ Bus* SistemaTransporte::consultarBusPorPlaca(const std::string& placa) const { /
 }
 
 Ruta* SistemaTransporte::consultarRutaPorNombre(const std::string& nombre) const { //Mismo que el metodo anterior pero con el nombre de la ruta
+    if (rutaCentro != nullptr && rutaCentro->nombre1() == nombre) { //Primero verifica que el puntero de RutaCentro no esté vacío y que su nombre coincida con el nombre buscado
+        return rutaCentro;
+    }
     for (auto* ruta : rutas) {
         if (ruta->nombre1() == nombre) {
             return ruta;
         }
     }
     return nullptr;
+}
+
+RutaCentro * SistemaTransporte::ruta_centro() const {
+    return rutaCentro;
 }
 
 //Inicialización del metodo complejo para crear nuevas rutas, usa polimorfimo y memoria dinámica para decidir
@@ -79,14 +84,23 @@ void SistemaTransporte::procesarYCrearRutas(const nlohmann::json& jRutas) {
         Ruta* ruta = nullptr; //Asignación del puntero vacío de ruta porque aún no se conoce si es barrio o centro
 
         if (tipo == "centro") { //Si la ruta que se está procesando resulta ser de centro, se llama a la unica instancia de RutaCentro
-            ruta = &RutaCentro::getInstance();
-        } else if (tipo == "barrio") { //En cambio, si resulta ser de barrio, se parsea el campo de sector del json y se crea el objeto
-        //de RutaBarrio en el heap, usando su constructor y parseando todos los artibutos antes sincronizados
+            rutaCentro = &RutaCentro::getInstance();
+            for (const auto& jParadero : jRuta["paraderos"]) { //Este metodo parsea los paraderos directamente porque
+                //si es RutaCentro, el continue de la parte inferior hará que se salte el parseo de sus paraderos y el vector quedaría vacío
+                const std::string nomParadero = jParadero.get<std::string>();
+                const auto p = new Paradero(nomParadero, "");
+                rutaCentro->agregarParadero(p);
+            }
+            continue;
+        }
+
+        if (tipo == "barrio") { //En cambio, si resulta ser de barrio, se parsea el campo de sector del json y se crea el objeto
+            //de RutaBarrio en el heap, usando su constructor y parseando todos los artibutos antes sincronizados
             const std::string sector = jRuta["sector"];
             ruta = new RutaBarrio(nombre, activa, descripcion, sector);
         }
 
-        if (ruta == nullptr) continue;
+        if (ruta == nullptr) continue; //Si el puntero de ruta no apunta a un objeto, se salta la iteración actual
 
         for (const auto& jParadero : jRuta["paraderos"]) { //Este metodo lee los paraderos que tiene cada ruta y los crea como objetos únicos
             const std::string nomParadero = jParadero.get<std::string>(); //Esta línea se encarga de usar el metodo de jParadero para
@@ -96,7 +110,7 @@ void SistemaTransporte::procesarYCrearRutas(const nlohmann::json& jRutas) {
         }
 
         if (tipo == "barrio") {
-            const auto rutaBarrio = dynamic_cast<RutaBarrio*>(ruta); //Esta linea hace la debida verificación de que la el puntero de tipo
+            const auto rutaBarrio = dynamic_cast<RutaBarrio*>(ruta); //Esta línea hace la debida verificación de que la el puntero de tipo
             //Ruta apunte a un objeto de tipo RutaBarrio, para que pueda acceder a los atributos propios de RutaBarrio y poder parsearlos según el json
             for (const auto& jHorario : jRuta["horarios"]) { //For que parsea los atributos de los horarios propios de rutaBarrio
                 const std::string hora   = jHorario["hora"];
@@ -134,7 +148,7 @@ void SistemaTransporte::procesarYCrearBuses(const nlohmann::json &jBuses) {
             const std::string telefono = jBus["conductor"]["telefono"];
 
             auto* conductor = new Conductor(id, nombre, licencia, telefono);
-            bus->asignarConductor(conductor); //Se  llama al metodo asignarConductor de la clase bus, a la vez que se hace esto, de manera implicita
+            bus->asignarConductor(conductor); //Se llama al metodo asignarConductor de la clase bus, a la vez que se hace esto, de manera implicita
             //se llama al metodo asignarConductor de la clase Conductor, así queda bien configurada la relación bidireccional que comparten estos dos
         }
         buses.push_back(bus); //Se agrega el objeto de bus antes creado con todas sus implicaciones a la parte final del vector de buses
@@ -161,4 +175,10 @@ void SistemaTransporte::cargarDatosDesdeArchivo() {
     procesarYCrearRutas(jRutas); //Se llaman los métodos correspondientes y se les da los archivos .json antes creados EN RAM,
     //para que sean procesados y los objetos sean creados por medio de esos métodos
     procesarYCrearBuses(jBuses);
+}
+
+void SistemaTransporte::iniciarSistema() {
+    cargarDatosDesdeArchivo();
+    //interfazGrafica = new Interfaz(); //Comentado por ahora, ya que no existe la interfaz
+    //interfazGrafica->mostrarMenu();
 }
