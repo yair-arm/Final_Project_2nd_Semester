@@ -1,8 +1,7 @@
-int main() {
-    //const sistemaTransporte& sistema1 = sistemaTransporte::getInstance();
-    //sistema1.iniciarSistema();
+#include "../include/SistemaTransporte.h"
 
-    //Aqui en el main se interactua con el try-catch
+int main() {
+    SistemaTransporte::getInstance().iniciarSistema();
     return 0;
 }
 

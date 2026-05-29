@@ -1,7 +1,7 @@
 [
   {
     "tipo": "centro",
-    "nombre": "Ruta Parque",
+    "nombre": "Ruta parque",
     "activa": true,
     "descripcion": "Ruta fija del centro de la ciudad.",
     "paraderos": [

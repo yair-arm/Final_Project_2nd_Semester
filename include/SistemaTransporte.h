@@ -8,6 +8,7 @@
 #include <vector>
 #include "Ruta.h"
 #include "Bus.h"
+#include "RutaCentro.h"
 #include <nlohmann/json.hpp>
 #include <string>
 
@@ -18,9 +19,11 @@ private:
     std::vector<Ruta*> rutas;
     std::vector<Bus*> buses;
     Interfaz* interfazGrafica;
+    RutaCentro* rutaCentro = nullptr; //Se inicializa un puntero de tipo RutaCentro porque debe ser creado antes de
+    //SistemaTransporte evitar una doble destrucción y memory leak
 
     const std::string ARCHIVO_BUSES = "data/buses_conductores.json";
-    const std::string ARCHIVO_RUTAS = "data/rutas.json";
+    const std::string ARCHIVO_RUTAS = "data/rutas_paraderos_horarios.json";
 
     SistemaTransporte();
     void cargarDatosDesdeArchivo();
@@ -39,6 +42,7 @@ public:
     [[nodiscard]] const std::vector<Ruta*>& getRutas() const;
     [[nodiscard]] Bus* consultarBusPorPlaca(const std::string& placa) const;
     [[nodiscard]] Ruta* consultarRutaPorNombre(const std::string& nombre) const;
+    [[nodiscard]] RutaCentro * ruta_centro() const;
 };
 
 
