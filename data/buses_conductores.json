@@ -2,7 +2,7 @@
   {
     "placa": "SKP-421",
     "capacidad": 40,
-    "ruta": "Ruta Parque",
+    "ruta": "Ruta parque",
     "disponible": true,
     "observacion": "",
     "conductor": {
@@ -15,7 +15,7 @@
   {
     "placa": "TXZ-893",
     "capacidad": 40,
-    "ruta": "Ruta Parque",
+    "ruta": "Ruta parque",
     "disponible": true,
     "observacion": "",
     "conductor": {
