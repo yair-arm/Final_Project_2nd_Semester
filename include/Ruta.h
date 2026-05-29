@@ -16,7 +16,7 @@ public:
     Ruta(std::string nombre, std::string tipo, bool act, std::string descripcion); //Constructor
     virtual ~Ruta(); //Destructor virtual
     void agregarParadero(Paradero* nuevoParadero); //sistemaTransporte usa el constructor de paradero para crear un nuevo objeto y guardarlo en el vector
-
+    friend std::ostream &operator<<(std::ostream &os, const Ruta *ruta); //Sobrecarga del operador << para poder imprimir la ruta en la interfaz
     [[nodiscard]] const std::vector<Paradero*>& paraderos1() const;
     [[nodiscard]] std::string nombre1() const;
     [[nodiscard]] std::string tipo1() const;

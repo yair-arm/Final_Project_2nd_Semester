@@ -9,7 +9,7 @@ Ruta::Ruta(std::string nombre, std::string tipo, const bool act, std::string des
     tipo(std::move(tipo)), activa(act), descripcion(std::move(descripcion)) {
 }
 
-//No se usa referencia al pasar los strings, en cambio se usa std::move para evitar copias innecesarias y solo mover las variables
+//No se usa referencia al pasar los strings, en cambio, se usa std::move para evitar copias innecesarias y solo mover las variables
 
 Ruta::~Ruta() {
     for (const auto* paradero : paraderos) {
@@ -20,6 +20,14 @@ Ruta::~Ruta() {
 
 void Ruta::agregarParadero(Paradero* nuevoParadero) {
     paraderos.push_back(nuevoParadero);
+}
+
+std::ostream& operator<<(std::ostream& os, const Ruta& ruta) {
+    os << "Nombre: " << ruta.nombre1() << std::endl;
+    os << "Tipo: " << ruta.tipo1() << std::endl;
+    os << "Activa: " << (ruta.activa1() ? "Sí" : "No") << std::endl;
+    os << "Descripcion: " << ruta.descripcion1() << std::endl;
+    return os;
 }
 
 const std::vector<Paradero *>& Ruta::paraderos1() const {

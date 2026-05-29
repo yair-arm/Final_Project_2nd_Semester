@@ -1,5 +1,5 @@
 #include "../include/SistemaTransporte.h"
-// #include "../include/Interfaz.h"
+#include "../include/Interfaz.h"
 #include "../include/RutaBarrio.h"
 #include "../include/RutaCentro.h"
 #include "../include/Conductor.h"
@@ -28,8 +28,8 @@ SistemaTransporte::~SistemaTransporte() {
     }
     rutas.clear();
 
-    //delete interfazGrafica; //Comentado debido a que aún no existe una interfaz la cual destruir, temporalmente
-    //interfazGrafica = nullptr;
+    delete interfazGrafica; //Comentado debido a que aún no existe una interfaz la cual destruir, temporalmente
+    interfazGrafica = nullptr;
 }
 
 const std::vector<Ruta*>& SistemaTransporte::getRutas() const { //Getter del vector de rutas
@@ -105,8 +105,8 @@ void SistemaTransporte::procesarYCrearRutas(const nlohmann::json& jRutas) {
         }
 
         if (tipo == "barrio") {
-            const auto rutaBarrio = dynamic_cast<RutaBarrio*>(ruta); //Esta línea hace la debida verificación de que la el puntero de tipo
-            //Ruta apunte a un objeto de tipo RutaBarrio, para que pueda acceder a los atributos propios de RutaBarrio y poder parsearlos según el json
+            const auto rutaBarrio = dynamic_cast<RutaBarrio*>(ruta); //Esta línea hace la debida verificación de que el puntero de tipo
+            //Ruta apunte a un objeto de tipo RutaBarrio, para que pueda acceder a los horarios propios de RutaBarrio y poder parsearlos según el json
             for (const auto& jHorario : jRuta["horarios"]) { //For que parsea los atributos de los horarios propios de rutaBarrio
                 const std::string hora   = jHorario["hora"];
                 const std::string minuto = jHorario["minuto"];
@@ -174,6 +174,6 @@ void SistemaTransporte::cargarDatosDesdeArchivo() {
 
 void SistemaTransporte::iniciarSistema() {
     cargarDatosDesdeArchivo();
-    //interfazGrafica = new Interfaz(); //Comentado por ahora, ya que no existe la interfaz
-    //interfazGrafica->mostrarMenu();
+    //interfazGrafica = new Interfaz();
+    //interfazGrafica->mostrarBienvenida(); //Comentado hasta que el metodo se programe
 }
