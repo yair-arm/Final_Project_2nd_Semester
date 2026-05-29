@@ -1,7 +1,3 @@
-//
-// Created by Nicolle on 5/26/2026.
-//
-
 #include "../include/SistemaTransporte.h"
 // #include "../include/Interfaz.h"
 #include "../include/RutaBarrio.h"
@@ -11,7 +7,6 @@
 #include "../include/Horario.h"
 #include <nlohmann/json.hpp>
 #include <fstream>
-#include <stdexcept>
 #include "IncidenciaExepcion.h"
 
 SistemaTransporte::SistemaTransporte() : interfazGrafica(nullptr) {}
