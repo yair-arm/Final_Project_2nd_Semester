@@ -9,6 +9,7 @@
 #include <iomanip>
 #include "IncidenciaExepcion.h"
 #include "SistemaTransporte.h"
+#include <conio.h> //Para _kbhit el detectar "cualquier techa" windows,se usa para saber si presionaron algo sin bloquear el loop.
 
 Interfaz::Interfaz(SistemaTransporte& sis) : sistema(sis) {}
 Interfaz::~Interfaz() = default;
@@ -42,7 +43,21 @@ int Interfaz::obtenerMinutosActuales() const {
 
 
 void Interfaz::mostrarBienvenida() {
+    system("cls");
+    SetConsoleTextAttribute(hConsole, 11); // 11 = cyan
+    std::cout << "Tu Ruta TUI";
+    SetConsoleTextAttribute(hConsole, 7); // 7 = blanco
+    std::cout << "Presione cualquier tecla para continuar...\n\n";
 
+        while (!_kbhit()) {
+             const std::time_t t = std::time(nullptr);
+             const std::tm* tm = std::localtime(&t);
+
+            std::cout << "SISTEMA DE RUTAS UNILLANOS [LUN-VIE] RELOJ: " << std::put_time(tm, "%Y-%m-%d %H:%M:%S");
+            std::cout.flush(); //Para forzar que se muestre inmediatamente
+
+            Sleep(1000); //esperar 1 segundo (windows.h)
+        }
 }
 
 
