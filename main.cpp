@@ -4,4 +4,3 @@ int main() {
     SistemaTransporte::getInstance().iniciarSistema();
     return 0;
 }
-
