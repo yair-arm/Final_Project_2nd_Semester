@@ -24,13 +24,13 @@ private:
 public:
     explicit Interfaz(SistemaTransporte& sis);
     ~Interfaz();
-    void mostrarBienvenida() const;
+    static void registrarLogConsulta(const std::string& detalle);
+    static void mostrarBienvenida();
     void mostrarPantalla2_TipoRuta() const;
     void mostrarPantalla3_SentidoCentro() const;
     void mostrarPantalla4_InfoCentro(const Ruta* ruta) const;
     void mostrarPantalla5_ListaBarrio() const;
     void mostrarPantalla6_InfoBarrio(const Ruta* ruta) const;
-    void registrarLogConsulta(const std::string& detalle) const;
 };
 
 
