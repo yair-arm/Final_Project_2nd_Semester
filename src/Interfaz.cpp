@@ -90,5 +90,16 @@ void Interfaz::mostrarPantalla2_TipoRuta() {
     }
 }
 
+void Interfaz::mostrarPantalla3_SentidoCentro() {
+    system("cls");
+    std::cout << "--- PANTALLA 3 EN DESARROLLO ---\n";
+    system("pause");
+}
+
+void Interfaz::mostrarPantalla5_ListaBarrio() {
+    system("cls");
+    std::cout << "--- PANTALLA 5 EN DESARROLLO ---\n";
+    system("pause");
+}
 
 
