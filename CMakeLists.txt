@@ -44,5 +44,9 @@ add_executable(Proyecto main.cpp
 # 4. Vincular la librería JSON descargada con tu proyecto ejecutable
 target_link_libraries(Proyecto PRIVATE nlohmann_json::nlohmann_json)
 
-# 5. Copiar tu carpeta de datos (JSONs) al directorio de compilación automáticamente
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+# 5. Copiar tu carpeta de datos (JSONs) junto al ejecutable generado
+add_custom_command(TARGET Proyecto POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_CURRENT_SOURCE_DIR}/data
+        $<TARGET_FILE_DIR:Proyecto>/data
+)
