@@ -19,18 +19,25 @@ private:
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); //Control remoto para lograr cambiar cosas visuales de la consola
     int TIEMPO_ENTRE_PARADEROS = 6;
     SistemaTransporte& sistema;
+
+    // Herramientas matemáticas independeientes (Sí pueden ser static)
     [[nodiscard]]  static int tiempoAMinutos(int hora, int minutos); //Se le ingresa una hora y retorna ese tiempo en minutos que han pasado desde la medianoche
     [[nodiscard]]  static int obtenerMinutosActuales(); //Obtiene los minutos actuales que han pasado desde la medianoche
+
 public:
     explicit Interfaz(SistemaTransporte& sis);
     ~Interfaz();
+
+    // El log puede ser static si no usa variables de la clase
     static void registrarLogConsulta(const std::string& detalle);
-    static void mostrarBienvenida();
-    static void mostrarPantalla2_TipoRuta();
-    static void mostrarPantalla3_SentidoCentro();
-    static void mostrarPantalla4_InfoCentro(const Ruta* ruta);
-    static void mostrarPantalla5_ListaBarrio();
-    static void mostrarPantalla6_InfoBarrio(const Ruta* ruta);
+
+    // Estas NO deben ser static porque usan hConsole y el objeto sistema
+    void mostrarBienvenida();
+    void mostrarPantalla2_TipoRuta();
+    void mostrarPantalla3_SentidoCentro();
+    void mostrarPantalla4_InfoCentro(const Ruta* ruta);
+    void mostrarPantalla5_ListaBarrio();
+    void mostrarPantalla6_InfoBarrio(const Ruta* ruta);
 };
 
 
