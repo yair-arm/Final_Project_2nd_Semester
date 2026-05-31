@@ -174,6 +174,9 @@ void SistemaTransporte::cargarDatosDesdeArchivo() {
 
 void SistemaTransporte::iniciarSistema() {
     cargarDatosDesdeArchivo();
-    //interfazGrafica = new Interfaz();
-    //interfazGrafica->mostrarBienvenida(); //Comentado hasta que el metodo se programe
+
+    //YA SE PUEDE DESCOMENTAR YA QUE YA EXISTE LA INTERFAZ!!!
+    interfazGrafica = new Interfaz(*this); // Creamos la interfaz en el heap pasándole este mismo sistema (*this)
+
+    interfazGrafica->mostrarBienvenida();
 }
