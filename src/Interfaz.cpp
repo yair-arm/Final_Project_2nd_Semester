@@ -40,12 +40,11 @@ int Interfaz::obtenerMinutosActuales() {
     // tm_hour y tm_min vienen de std::tm de la libreria <ctime>
 }
 
-
 void Interfaz::mostrarBienvenida() {
 
     while (!_kbhit()) {
-        system("cls"); //Clear Screen
-
+        COORD pos = {0, 0};
+        SetConsoleCursorPosition(hConsole, pos);  // ← en lugar de system("cls")
         const std::time_t t = std::time(nullptr);
         const std::tm* tm = std::localtime(&t);
 
@@ -62,8 +61,33 @@ void Interfaz::mostrarBienvenida() {
 
         Sleep(1000); //esperar 1 segundo (windows.h)
     }
+    _getch();
+    system("cls");
+    std::cout << "Cargando el menú principal... Presione ENTER para ingresar.\n";
+    std::cin.get();
+}
+
+void Interfaz::mostrarPantalla2_TipoRuta() {
     system("cls");
 
+    const std::time_t t = std::time(nullptr);
+    const std::tm* tm = std::localtime(&t);
+
+    std::cout << "SISTEMA DE RUTAS UNILLANOS [LUN-VIE] RELOJ: " << std::put_time(tm, "%H:%M:%S") << "\n\n\n";
+    std::cout << "PASO 1 - SELECCIONE TIPO DE RUTA\n\n";
+    std::cout << "[1] Ruta Centro (Directas desde Parque / Interrapidísimo)\n";
+    std::cout << "Ruta de Barrio (Circuitos Alimentadores Especiales)\n\n";
+    std::cout << "[0] Volver | [Q] Salir\n";
+
+    char opcion;
+    std::cin >> opcion;
+
+    switch (opcion) {
+        case '1': mostrarPantalla3_SentidoCentro(); break;
+            case '2': mostrarPantalla5_ListaBarrio(); break;
+            case '0': mostrarBienvenida(); break;
+            case 'Q': case 'q': break; //salir
+    }
 }
 
 
