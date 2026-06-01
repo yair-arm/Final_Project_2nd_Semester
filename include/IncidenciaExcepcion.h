@@ -20,7 +20,7 @@ public:
     //'override' al destructor para sobrescribir el de std::exception de forma segura
     ~IncidenciaExcepcion() override;
 
-    // Método para tu reporte personalizado
+    // Metodo para el reporte personalizado
     [[nodiscard]] std::string infoExcepcion() const;
 
     // El "noexcept" promete al compilador que esta función no fallará

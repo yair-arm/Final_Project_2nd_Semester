@@ -7,10 +7,10 @@
 
 Paradero::Paradero(std::string nom, std::string ubi) : nombre(std::move(nom)), ubicacion(std::move(ubi)) {}
 
-std::string Paradero::nombre1() const {
+std::string Paradero::getName() const {
     return nombre;
 }
 
-std::string Paradero::ubicacion1() const {
+std::string Paradero::getUbicacion() const {
     return ubicacion;
 }

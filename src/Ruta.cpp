@@ -23,25 +23,36 @@ void Ruta::agregarParadero(Paradero* nuevoParadero) {
 }
 
 std::ostream& operator<<(std::ostream& os, const Ruta& ruta) {
-    os << "Nombre: " << ruta.nombre1() << std::endl;
-    os << "Tipo: " << ruta.tipo1() << std::endl;
-    os << "Activa: " << (ruta.activa1() ? "Sí" : "No") << std::endl;
-    os << "Descripcion: " << ruta.descripcion1() << std::endl;
+    os << "Nombre: " << ruta.getName() << std::endl;
+    os << "Tipo: " << ruta.getType() << std::endl;
+    os << "Activa: " << (ruta.isActive() ? "Sí" : "No") << std::endl;
+    os << "Descripcion: " << ruta.getDescription() << std::endl;
     return os;
 }
 
-const std::vector<Paradero *>& Ruta::paraderos1() const {
+
+const std::vector<Paradero *>& Ruta::getParaderos() const {
     return paraderos;
 }
-std::string Ruta::nombre1() const {
+std::string Ruta::getName() const {
     return nombre;
 }
-std::string Ruta::tipo1() const {
+std::string Ruta::getType() const {
     return tipo;
 }
-bool Ruta::activa1() const {
+bool Ruta::isActive() const {
     return activa;
 }
-std::string Ruta::descripcion1() const {
+std::string Ruta::getDescription() const {
     return descripcion;
 }
+
+bool Ruta::operator<(const Ruta &other) const {
+    if (nombre != other.nombre) return nombre < other.nombre;
+    return tipo < other.tipo;
+}
+
+bool Ruta::operator==(const Ruta &other) const {
+    return nombre == other.nombre && tipo == other.tipo;
+}
+

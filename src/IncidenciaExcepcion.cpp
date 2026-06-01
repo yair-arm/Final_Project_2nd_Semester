@@ -2,7 +2,7 @@
 // Created by Nicolle on 5/26/2026.
 //
 
-#include "../include/IncidenciaExepcion.h"
+#include "../include/IncidenciaExcepcion.h"
 
 IncidenciaExcepcion::IncidenciaExcepcion(std::string condicion, std::string mensaje)
     : condicion(std::move(condicion)), mensaje(std::move(mensaje)) {}

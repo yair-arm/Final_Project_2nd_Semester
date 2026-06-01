@@ -21,6 +21,9 @@ void Bus::desvincularRuta() {
 }
 
 void Bus::asignarConductor(Conductor* nuevoConductor) {
+    if (conductorAsignado != nullptr) {
+        delete conductorAsignado;
+    }
     conductorAsignado = nuevoConductor;
 
     if (nuevoConductor != nullptr) {
@@ -29,30 +32,31 @@ void Bus::asignarConductor(Conductor* nuevoConductor) {
 }
 
 void Bus::desvincularConductor() {
+    delete this->conductorAsignado;
     this->conductorAsignado = nullptr;
 }
 
-std::string Bus::placa1() const {
+std::string Bus::getPlaca() const {
     return this->placa;
 }
 
-bool Bus::disponible1() const {
+bool Bus::isDisponible() const {
     return disponible;
 }
 
-std::string Bus::observacion1() const {
+std::string Bus::getObservacion() const {
     return observacion;
 }
 
-int Bus::capacidad1() const {
+int Bus::getCapacidad() const {
     return this->capacidad;
 }
 
-Ruta * Bus::ruta_asignada() const {
+Ruta * Bus::getRutaAsignada() const {
     return this->rutaAsignada;
 }
 
-Conductor * Bus::conductor_asignado() const {
+Conductor * Bus::getConductorAsignado() const {
     return conductorAsignado;
 }
 

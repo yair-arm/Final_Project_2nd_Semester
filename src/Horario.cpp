@@ -11,13 +11,13 @@ void Horario::actualizarEstado(std::string nuevoEstado) {
     this->estado = std::move(nuevoEstado);
 }
 
-std::string Horario::hora1() const {
+std::string Horario::getHora() const {
     return hora;
 }
-std::string Horario::minuto1() const {
+std::string Horario::getMinuto() const {
     return minuto;
 }
-std::string Horario::estado1() const {
+std::string Horario::getEstado() const {
     return estado;
 }
 

@@ -7,10 +7,7 @@
 
 #include <windows.h>
 #include <iostream>
-#include <ctime>
-#include <vector>
-#include <cstdlib>
-#include <chrono>
+#include <string>
 
 class SistemaTransporte; //Forward Declaration
 class Ruta; //Forward Declaration
@@ -19,25 +16,28 @@ private:
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); //Control remoto para lograr cambiar cosas visuales de la consola
     int TIEMPO_ENTRE_PARADEROS = 6;
     SistemaTransporte& sistema;
+    [[nodiscard]] static int tiempoAMinutos(int hora, int minutos); //Se le ingresa una hora y retorna ese tiempo en minutos que han pasado desde la medianoche
+    [[nodiscard]] static int obtenerMinutosActuales(); //Obtiene los minutos actuales que han pasado desde la medianoche
 
-    // Herramientas matemáticas independeientes (Sí pueden ser static)
-    [[nodiscard]]  static int tiempoAMinutos(int hora, int minutos); //Se le ingresa una hora y retorna ese tiempo en minutos que han pasado desde la medianoche
-    [[nodiscard]]  static int obtenerMinutosActuales(); //Obtiene los minutos actuales que han pasado desde la medianoche
+    static void setColor(int color);
+    static void dibujarLinea(char c, int ancho);
+    static void dibujarRecuadro(const std::string& titulo);
+    static void cerrarRecuadro();
+    static void imprimirSugerencia(const std::string& texto);
+    // Actualiza el reloj en la posición (x,y) sin redibujar toda la pantalla
+    void actualizarReloj(int x, int y) const;
+
 
 public:
     explicit Interfaz(SistemaTransporte& sis);
     ~Interfaz();
 
-    // El log puede ser static si no usa variables de la clase
     static void registrarLogConsulta(const std::string& detalle);
-
-    // Estas NO deben ser static porque usan hConsole y el objeto sistema
-    void mostrarBienvenida();
-    void mostrarPantalla2_TipoRuta();
-    void mostrarPantalla3_SentidoCentro();
-    void mostrarPantalla4_InfoCentro(const Ruta* ruta);
-    void mostrarPantalla5_ListaBarrio();
-    void mostrarPantalla6_InfoBarrio(const Ruta* ruta);
+    void mostrarBienvenida() const;
+    void mostrarPantalla2_TipoRuta() const;
+    void mostrarPantalla3_SentidoCentro() const;
+    void mostrarPantalla3_ListaBarrio() const;
+    void mostrarPantalla4_InfoRuta(const Ruta* ruta) const;
 };
 
 

@@ -8,29 +8,29 @@
 #include <nlohmann/json.hpp>
 #include <fstream>
 #include <windows.h>
-#include "IncidenciaExepcion.h"
+#include "IncidenciaExcepcion.h"
 
 namespace {
-std::string construirRutaDatos(const std::string& nombreArchivo) {
-    char rutaEjecutable[MAX_PATH];
-    const DWORD longitud = GetModuleFileNameA(nullptr, rutaEjecutable, MAX_PATH);
+    std::string construirRutaDatos(const std::string& nombreArchivo) {
+        char rutaEjecutable[MAX_PATH];
+        const DWORD longitud = GetModuleFileNameA(nullptr, rutaEjecutable, MAX_PATH);
 
-    if (longitud == 0 || longitud == MAX_PATH) {
-        throw IncidenciaExcepcion("RUTA DEL EJECUTABLE NO DISPONIBLE",
-                                  "No se pudo obtener la ruta del ejecutable actual");
+        if (longitud == 0 || longitud == MAX_PATH) {
+            throw IncidenciaExcepcion("RUTA DEL EJECUTABLE NO DISPONIBLE",
+                                      "No se pudo obtener la ruta del ejecutable actual");
+        }
+
+        const std::string rutaCompleta(rutaEjecutable);
+        const size_t posicionSeparador = rutaCompleta.find_last_of("\\/");
+
+        if (posicionSeparador == std::string::npos) {
+            throw IncidenciaExcepcion("RUTA DEL EJECUTABLE INVALIDA",
+                                      "No se pudo determinar la carpeta del ejecutable actual");
+        }
+
+        const std::string carpetaEjecutable = rutaCompleta.substr(0, posicionSeparador + 1);
+        return carpetaEjecutable + "data\\" + nombreArchivo;
     }
-
-    const std::string rutaCompleta(rutaEjecutable);
-    const size_t posicionSeparador = rutaCompleta.find_last_of("\\/");
-
-    if (posicionSeparador == std::string::npos) {
-        throw IncidenciaExcepcion("RUTA DEL EJECUTABLE INVALIDA",
-                                  "No se pudo determinar la carpeta del ejecutable actual");
-    }
-
-    const std::string carpetaEjecutable = rutaCompleta.substr(0, posicionSeparador + 1);
-    return carpetaEjecutable + "data\\" + nombreArchivo;
-}
 }
 
 SistemaTransporte::SistemaTransporte() : interfazGrafica(nullptr) {}
@@ -67,7 +67,7 @@ const std::vector<Bus*>& SistemaTransporte::getBuses() const { //Getter del vect
 Bus* SistemaTransporte::consultarBusPorPlaca(const std::string& placa) const { //Este metodo se encarga de buscar la placa ingresada dentro del vector de buses
 //De SistemaTransporte, lo hace por medio de un for, si la encuentra, retorna el bus, si no, retorna nullptr
     for (auto* bus : buses) {
-        if (bus->placa1() == placa) {
+        if (bus->getPlaca() == placa) {
             return bus;
         }
     }
@@ -75,11 +75,11 @@ Bus* SistemaTransporte::consultarBusPorPlaca(const std::string& placa) const { /
 }
 
 Ruta* SistemaTransporte::consultarRutaPorNombre(const std::string& nombre) const { //Mismo que el metodo anterior pero con el nombre de la ruta
-    if (rutaCentro != nullptr && rutaCentro->nombre1() == nombre) { //Primero verifica que el puntero de RutaCentro no esté vacío y que su nombre coincida con el nombre buscado
+    if (rutaCentro != nullptr && rutaCentro->getName() == nombre) { //Primero verifica que el puntero de RutaCentro no esté vacío y que su nombre coincida con el nombre buscado
         return rutaCentro;
     }
     for (auto* ruta : rutas) {
-        if (ruta->nombre1() == nombre) {
+        if (ruta->getName() == nombre) {
             return ruta;
         }
     }
@@ -184,11 +184,11 @@ void SistemaTransporte::cargarDatosDesdeArchivo() {
     std::ifstream archivoBuses(rutaArchivoBuses);
 
     if (!archivoRutas.is_open()) { //Configuración de la incidencia usando la clase IncidenciaExcepcion, antes creada
-        throw IncidenciaExcepcion("ARCHIVO NO ENCONTRADO", "No se ha podido abrir el archivo " + rutaArchivoRutas);
+        throw IncidenciaExcepcion("ARCHIVO NO ENCONTRADO", "No se ha podido abrir el archivo " + ARCHIVO_RUTAS);
     }
 
     if (!archivoBuses.is_open()) {
-        throw IncidenciaExcepcion("ARCHIVO NO ENCONTRADO", "No se ha podido abrir el archivo " + rutaArchivoBuses);
+        throw IncidenciaExcepcion("ARCHIVO NO ENCONTRADO", "No se ha podido abrir el archivo " + ARCHIVO_BUSES);
     }
 
     nlohmann::json jRutas = nlohmann::json::parse(archivoRutas); //Se crea un archivo json EN LA RAM, parseando los archivos ya abiertos
@@ -201,9 +201,15 @@ void SistemaTransporte::cargarDatosDesdeArchivo() {
 
 void SistemaTransporte::iniciarSistema() {
     cargarDatosDesdeArchivo();
-
-    if (interfazGrafica == nullptr) {
-        interfazGrafica = new Interfaz(*this);
+    // Crear e iniciar la interfaz gráfica de consola
+    interfazGrafica = new Interfaz(*this);
+    try {
+        interfazGrafica->mostrarBienvenida();
+        interfazGrafica->mostrarPantalla2_TipoRuta();
+    } catch (const std::exception& ex) {
+        // Registrar en log en caso de excepcion
+        try { Interfaz::registrarLogConsulta(std::string("EXCEPCION: ") + ex.what()); } catch(...){}
     }
-    interfazGrafica->mostrarBienvenida();
-}
+    delete interfazGrafica;
+    interfazGrafica = nullptr;
+ }

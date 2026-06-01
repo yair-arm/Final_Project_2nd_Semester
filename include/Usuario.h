@@ -14,9 +14,9 @@ private:
 public:
     Usuario(std::string nom, int cod, bool car);
 
-    [[nodiscard]] std::string nombre1() const;
-    [[nodiscard]] int codigo1() const;
-    [[nodiscard]] bool carnet1() const;
+    [[nodiscard]] std::string getName() const;
+    [[nodiscard]] int getCodigo() const;
+    [[nodiscard]] bool hasCarnet() const;
 };
 
 #endif //PROYECTO_USUARIO_H
