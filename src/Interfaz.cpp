@@ -73,23 +73,37 @@ void Interfaz::mostrarBienvenida() {
 void Interfaz::mostrarPantalla2_TipoRuta() {
     system("cls");
 
-    const std::time_t t = std::time(nullptr);
-    const std::tm* tm = std::localtime(&t);
+    while (_kbhit()) {
+        _getch();
+    }
 
-    std::cout << "SISTEMA DE RUTAS UNILLANOS [LUN-VIE] RELOJ: " << std::put_time(tm, "%H:%M:%S") << "\n\n\n";
-    std::cout << "PASO 1 - SELECCIONE TIPO DE RUTA\n\n";
-    std::cout << "[1] Ruta Centro (Directas desde Parque / Interrapidísimo)\n";
-    std::cout << "[2] Ruta de Barrio (Circuitos Alimentadores Especiales)\n\n";
-    std::cout << "[0] Volver | [Q] Salir\n";
+    while (true) {
+        COORD pos = {0, 0};
+        SetConsoleCursorPosition(hConsole, pos);
 
-    char opcion;
-    std::cin >> opcion;
+        const std::time_t t = std::time(nullptr);
+        const std::tm* tm = std::localtime(&t);
 
-    switch (opcion) {
-        case '1': mostrarPantalla3_SentidoCentro(); break;
-        case '2': mostrarPantalla5_ListaBarrio(); break;
-        case '0': mostrarBienvenida(); break;
-        case 'Q': case 'q': break; //salir
+        std::cout << "SISTEMA DE RUTAS UNILLANOS [LUN-VIE] RELOJ: " << std::put_time(tm, "%H:%M:%S") << "\n\n\n";
+        std::cout << "PASO 1 - SELECCIONE TIPO DE RUTA\n\n";
+        std::cout << "[1] Ruta Centro (Directas desde Parque / Interrapidísimo)\n";
+        std::cout << "[2] Ruta de Barrio (Circuitos Alimentadores Especiales)\n\n";
+        std::cout << "[0] Volver | [Q] Salir\n";
+        std::cout.flush();
+
+        if (_kbhit()) {
+            const char opcion = static_cast<char>(_getch());
+
+            switch (opcion) {
+                case '1': mostrarPantalla3_SentidoCentro(); return;
+                case '2': mostrarPantalla5_ListaBarrio(); return;
+                case '0': mostrarBienvenida(); return;
+                case 'Q': case 'q': return; //salir
+                default: break;
+            }
+        }
+
+        Sleep(1000);
     }
 }
 
@@ -104,4 +118,3 @@ void Interfaz::mostrarPantalla5_ListaBarrio() {
     std::cout << "--- PANTALLA 5 EN DESARROLLO ---\n";
     system("pause");
 }
-
