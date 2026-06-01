@@ -16,9 +16,9 @@ public:
     ~Horario();
     void actualizarEstado(std::string nuevoEstado);
     //Este metodo que nos permitirá actualizar el estado de la ruta de "A tiempo" a por ejemplo "Retrasada"
-    [[nodiscard]] std::string hora1() const;
-    [[nodiscard]] std::string minuto1() const;
-    [[nodiscard]] std::string estado1() const;
+    [[nodiscard]] std::string getHora() const;
+    [[nodiscard]] std::string getMinuto() const;
+    [[nodiscard]] std::string getEstado() const;
 };
 
 #endif //PROYECTO_HORARIO_H

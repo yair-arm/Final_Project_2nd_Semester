@@ -7,10 +7,7 @@
 
 #include <windows.h>
 #include <iostream>
-#include <ctime>
-#include <vector>
-#include <cstdlib>
-#include <chrono>
+#include <string>
 
 class SistemaTransporte; //Forward Declaration
 class Ruta; //Forward Declaration
@@ -21,6 +18,16 @@ private:
     SistemaTransporte& sistema;
     [[nodiscard]] static int tiempoAMinutos(int hora, int minutos); //Se le ingresa una hora y retorna ese tiempo en minutos que han pasado desde la medianoche
     [[nodiscard]] static int obtenerMinutosActuales(); //Obtiene los minutos actuales que han pasado desde la medianoche
+
+    static void setColor(int color);
+    static void dibujarLinea(char c, int ancho);
+    static void dibujarRecuadro(const std::string& titulo);
+    static void cerrarRecuadro();
+    static void imprimirSugerencia(const std::string& texto);
+    // Actualiza el reloj en la posición (x,y) sin redibujar toda la pantalla
+    void actualizarReloj(int x, int y) const;
+
+
 public:
     explicit Interfaz(SistemaTransporte& sis);
     ~Interfaz();
@@ -29,9 +36,8 @@ public:
     void mostrarBienvenida() const;
     void mostrarPantalla2_TipoRuta() const;
     void mostrarPantalla3_SentidoCentro() const;
-    void mostrarPantalla4_InfoCentro(const Ruta* ruta) const;
-    void mostrarPantalla5_ListaBarrio();
-    void mostrarPantalla6_InfoBarrio(const Ruta* ruta) const;
+    void mostrarPantalla3_ListaBarrio() const;
+    void mostrarPantalla4_InfoRuta(const Ruta* ruta) const;
 };
 
 

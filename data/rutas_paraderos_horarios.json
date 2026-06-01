@@ -3,7 +3,7 @@
     "tipo": "centro",
     "nombre": "Ruta parque",
     "activa": true,
-    "descripcion": "Ruta fija del centro de la ciudad.",
+    "descripcion": "Ruta fija del centro de la ciudad. Sale cada 20 minutos desde el Parque de Los Estudiantes.",
     "paraderos": [
       "Parque de Los Estudiantes",
       "Unicentro paradero buses públicos",
@@ -34,12 +34,12 @@
       { "hora": "06", "minuto": "20", "estado": "Salida Barrio" },
       { "hora": "07", "minuto": "20", "estado": "Salida Barrio" },
       { "hora": "08", "minuto": "20", "estado": "Salida Barrio" },
-      { "hora": "13", "minuto": "25", "estado": "Salida Barrio" },
-      { "hora": "11", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "13", "minuto": "25", "estado": "Salida Barrio - Paradero entrada aptos. de Amarilo" },
+      { "hora": "11", "minuto": "00", "estado": "Salida Universidad - Combinada con Montecarlo" },
       { "hora": "12", "minuto": "00", "estado": "Salida Universidad" },
-      { "hora": "15", "minuto": "00", "estado": "Salida Universidad" },
       { "hora": "16", "minuto": "00", "estado": "Salida Universidad" },
-      { "hora": "18", "minuto": "10", "estado": "Salida Universidad" }
+      { "hora": "17", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "18", "minuto": "10", "estado": "Salida Universidad - Pasa por CDA Andino" }
     ]
   },
   {
@@ -57,16 +57,16 @@
       "Universidad de los Llanos Puerta 2"
     ],
     "horarios": [
-      { "hora": "05", "minuto": "20", "estado": "Salida Barrio" },
-      { "hora": "06", "minuto": "20", "estado": "Salida Barrio" },
-      { "hora": "07", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "05", "minuto": "20", "estado": "Salida Barrio - 4 Parques" },
+      { "hora": "06", "minuto": "20", "estado": "Salida Barrio - 4 Parques" },
+      { "hora": "07", "minuto": "20", "estado": "Salida Barrio - 4 Parques" },
       { "hora": "08", "minuto": "20", "estado": "Salida Barrio" },
-      { "hora": "11", "minuto": "20", "estado": "Salida Barrio" },
+      { "hora": "11", "minuto": "20", "estado": "Salida Barrio - Picadas y Algo Más" },
       { "hora": "13", "minuto": "25", "estado": "Salida Barrio" },
       { "hora": "11", "minuto": "00", "estado": "Salida Universidad" },
       { "hora": "12", "minuto": "00", "estado": "Salida Universidad" },
-      { "hora": "15", "minuto": "00", "estado": "Salida Universidad" },
       { "hora": "16", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "17", "minuto": "00", "estado": "Salida Universidad" },
       { "hora": "18", "minuto": "10", "estado": "Salida Universidad" }
     ]
   },
@@ -97,8 +97,8 @@
       { "hora": "13", "minuto": "25", "estado": "Salida Barrio" },
       { "hora": "11", "minuto": "00", "estado": "Salida Universidad" },
       { "hora": "12", "minuto": "00", "estado": "Salida Universidad" },
-      { "hora": "15", "minuto": "00", "estado": "Salida Universidad" },
       { "hora": "16", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "17", "minuto": "00", "estado": "Salida Universidad" },
       { "hora": "18", "minuto": "10", "estado": "Salida Universidad" }
     ]
   },
@@ -125,10 +125,10 @@
       { "hora": "06", "minuto": "10", "estado": "Salida Barrio" },
       { "hora": "07", "minuto": "10", "estado": "Salida Barrio" },
       { "hora": "08", "minuto": "20", "estado": "Salida Barrio" },
-      { "hora": "12", "minuto": "00", "estado": "Entrada aptos. La Madrid" },
-      { "hora": "13", "minuto": "20", "estado": "Entrada aptos. La Madrid" },
-      { "hora": "15", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "13", "minuto": "20", "estado": "Salida Barrio - Entrada aptos. La Madrid" },
+      { "hora": "12", "minuto": "00", "estado": "Salida Universidad - Entrada aptos. La Madrid" },
       { "hora": "16", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "17", "minuto": "00", "estado": "Salida Universidad" },
       { "hora": "18", "minuto": "10", "estado": "Salida Universidad" }
     ]
   },
@@ -155,8 +155,8 @@
       { "hora": "13", "minuto": "25", "estado": "Salida Barrio" },
       { "hora": "11", "minuto": "00", "estado": "Salida Universidad" },
       { "hora": "12", "minuto": "00", "estado": "Salida Universidad" },
-      { "hora": "15", "minuto": "00", "estado": "Salida Universidad" },
       { "hora": "16", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "17", "minuto": "00", "estado": "Salida Universidad" },
       { "hora": "18", "minuto": "10", "estado": "Salida Universidad" }
     ]
   },
@@ -188,8 +188,8 @@
       { "hora": "13", "minuto": "25", "estado": "Salida Barrio" },
       { "hora": "11", "minuto": "00", "estado": "Salida Universidad" },
       { "hora": "12", "minuto": "00", "estado": "Salida Universidad" },
-      { "hora": "15", "minuto": "00", "estado": "Salida Universidad" },
       { "hora": "16", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "17", "minuto": "00", "estado": "Salida Universidad" },
       { "hora": "18", "minuto": "10", "estado": "Salida Universidad" }
     ]
   },
@@ -215,8 +215,8 @@
       { "hora": "13", "minuto": "25", "estado": "Salida Barrio" },
       { "hora": "11", "minuto": "00", "estado": "Salida Universidad" },
       { "hora": "12", "minuto": "00", "estado": "Salida Universidad" },
-      { "hora": "15", "minuto": "00", "estado": "Salida Universidad" },
       { "hora": "16", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "17", "minuto": "00", "estado": "Salida Universidad" },
       { "hora": "18", "minuto": "10", "estado": "Salida Universidad" }
     ]
   },
@@ -245,8 +245,8 @@
       { "hora": "13", "minuto": "25", "estado": "Salida Barrio" },
       { "hora": "11", "minuto": "00", "estado": "Salida Universidad" },
       { "hora": "12", "minuto": "00", "estado": "Salida Universidad" },
-      { "hora": "15", "minuto": "00", "estado": "Salida Universidad" },
       { "hora": "16", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "17", "minuto": "00", "estado": "Salida Universidad" },
       { "hora": "18", "minuto": "10", "estado": "Salida Universidad" }
     ]
   },
@@ -270,8 +270,8 @@
       { "hora": "05", "minuto": "10", "estado": "Salida Barrio" },
       { "hora": "07", "minuto": "10", "estado": "Salida Barrio" },
       { "hora": "08", "minuto": "20", "estado": "Salida Barrio" },
-      { "hora": "15", "minuto": "00", "estado": "Salida Universidad" },
       { "hora": "16", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "17", "minuto": "00", "estado": "Salida Universidad" },
       { "hora": "18", "minuto": "10", "estado": "Salida Universidad" }
     ]
   },
@@ -299,8 +299,8 @@
       { "hora": "13", "minuto": "25", "estado": "Salida Barrio" },
       { "hora": "11", "minuto": "00", "estado": "Salida Universidad" },
       { "hora": "12", "minuto": "00", "estado": "Salida Universidad" },
-      { "hora": "15", "minuto": "00", "estado": "Salida Universidad" },
       { "hora": "16", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "17", "minuto": "00", "estado": "Salida Universidad" },
       { "hora": "18", "minuto": "10", "estado": "Salida Universidad" }
     ]
   },
@@ -322,11 +322,11 @@
       { "hora": "07", "minuto": "10", "estado": "Salida Barrio" },
       { "hora": "08", "minuto": "10", "estado": "Salida Barrio" },
       { "hora": "11", "minuto": "20", "estado": "Salida Barrio" },
-      { "hora": "13", "minuto": "25", "estado": "Salida Barrio (Inicia Rotonda)" },
-      { "hora": "11", "minuto": "00", "estado": "Salida Universidad (Combinada con Amarilo)" },
-      { "hora": "12", "minuto": "00", "estado": "Salida Universidad (Va por el Corredor Ecológico)" },
-      { "hora": "15", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "13", "minuto": "25", "estado": "Salida Barrio - Inicia en rotonda de Montecarlo" },
+      { "hora": "11", "minuto": "00", "estado": "Salida Universidad - Combinada con Amarilo, va por Corredor Ecológico" },
+      { "hora": "12", "minuto": "00", "estado": "Salida Universidad - Va por el Corredor Ecológico" },
       { "hora": "16", "minuto": "00", "estado": "Salida Universidad" },
+      { "hora": "17", "minuto": "00", "estado": "Salida Universidad" },
       { "hora": "18", "minuto": "10", "estado": "Salida Universidad" }
     ]
   }

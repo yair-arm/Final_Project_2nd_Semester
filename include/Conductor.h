@@ -21,11 +21,11 @@ public:
     Conductor (std::string idConductor, std::string nombre, std::string licencia, std::string telefono);
     ~Conductor() = default;
 
-    [[nodiscard]] std::string id_conductor() const;
-    [[nodiscard]] std::string nombre1() const;
-    [[nodiscard]] std::string licencia1() const;
-    [[nodiscard]] std::string telefono1() const;
-    [[nodiscard]] Bus* busAsignado1() const;
+    [[nodiscard]] std::string getId() const;
+    [[nodiscard]] std::string getName() const;
+    [[nodiscard]] std::string getLicencia() const;
+    [[nodiscard]] std::string getTelefono() const;
+    [[nodiscard]] Bus* getBusAsignado() const;
 
     void asignarBus(Bus* nuevoBus);
     void desvincularBus();

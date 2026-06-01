@@ -16,12 +16,16 @@ public:
     Ruta(std::string nombre, std::string tipo, bool act, std::string descripcion); //Constructor
     virtual ~Ruta(); //Destructor virtual
     void agregarParadero(Paradero* nuevoParadero); //sistemaTransporte usa el constructor de paradero para crear un nuevo objeto y guardarlo en el vector
-    friend std::ostream &operator<<(std::ostream &os, const Ruta *ruta); //Sobrecarga del operador << para poder imprimir la ruta en la interfaz
-    [[nodiscard]] const std::vector<Paradero*>& paraderos1() const;
-    [[nodiscard]] std::string nombre1() const;
-    [[nodiscard]] std::string tipo1() const;
-    [[nodiscard]] bool activa1() const;
-    [[nodiscard]] std::string descripcion1() const;
+    // Sobrecarga del operador << para poder imprimir la ruta en la interfaz (por referencia)
+    friend std::ostream &operator<<(std::ostream &os, const Ruta &ruta);
+    // Operadores para orden y comparación (útiles para containers y tests)
+    [[nodiscard]] bool operator<(const Ruta &other) const;
+    [[nodiscard]] bool operator==(const Ruta &other) const;
+    [[nodiscard]] const std::vector<Paradero*>& getParaderos() const;
+    [[nodiscard]] std::string getName() const;
+    [[nodiscard]] std::string getType() const;
+    [[nodiscard]] bool isActive() const;
+    [[nodiscard]] std::string getDescription() const;
 };
 
 #endif //PROYECTO_RUTA_H

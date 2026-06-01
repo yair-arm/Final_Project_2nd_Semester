@@ -13,7 +13,7 @@ RutaCentro& RutaCentro::getInstance() {
     return instancia;
 }
 
-int RutaCentro::frecuencia1() const {
+int RutaCentro::getFrecuencia() const {
     return frecuencia;
 }
 

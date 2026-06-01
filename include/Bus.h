@@ -23,12 +23,12 @@ public:
     void asignarConductor(Conductor* nuevoConductor);
     void desvincularRuta();
     void desvincularConductor();
-    [[nodiscard]] std::string placa1() const;
-    [[nodiscard]] bool disponible1() const;
-    [[nodiscard]] std::string observacion1() const;
-    [[nodiscard]] int capacidad1() const;
-    [[nodiscard]] Ruta* ruta_asignada() const;
-    [[nodiscard]] Conductor* conductor_asignado() const;
+    [[nodiscard]] std::string getPlaca() const;
+    [[nodiscard]] bool isDisponible() const;
+    [[nodiscard]] std::string getObservacion() const;
+    [[nodiscard]] int getCapacidad() const;
+    [[nodiscard]] Ruta* getRutaAsignada() const;
+    [[nodiscard]] Conductor* getConductorAsignado() const;
 };
 
 

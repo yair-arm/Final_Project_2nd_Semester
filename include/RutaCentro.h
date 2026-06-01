@@ -21,7 +21,7 @@ public:
     void operator=(const RutaCentro&) = delete;
     ~RutaCentro() override = default;
 
-    [[nodiscard]] int frecuencia1() const;
+    [[nodiscard]] int getFrecuencia() const;
 };
 
 #endif //PROYECTO_RUTACENTRO_H

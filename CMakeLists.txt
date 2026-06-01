@@ -35,14 +35,20 @@ add_executable(Proyecto main.cpp
         include/Usuario.h
         include/SistemaTransporte.h
         src/SistemaTransporte.cpp
-        src/IncidenciaExepcion.cpp
-        include/IncidenciaExepcion.h
+        src/IncidenciaExcepcion.cpp
+        include/IncidenciaExcepcion.h
         src/Interfaz.cpp
         include/Interfaz.h
 )
 
 # 4. Vincular la librería JSON descargada con tu proyecto ejecutable
 target_link_libraries(Proyecto PRIVATE nlohmann_json::nlohmann_json)
+
+# Forzar enlace estático de las runtimes de GNU en Windows para evitar dependencias a DLLs como libgcc_s_seh-1.dll
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND WIN32)
+    # -static puede aumentar el tamaño del ejecutable pero evita la necesidad de distribuir libgcc/libstdc++
+    target_link_options(Proyecto PRIVATE -static -static-libgcc -static-libstdc++)
+endif()
 
 # 5. Copiar tu carpeta de datos (JSONs) al directorio de compilación automáticamente
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

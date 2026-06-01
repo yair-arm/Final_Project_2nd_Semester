@@ -14,8 +14,8 @@ public:
     Paradero(std::string nom, std::string ubi);
     ~Paradero() = default;
 
-    [[nodiscard]] std::string nombre1() const;
-    [[nodiscard]] std::string ubicacion1() const;
+    [[nodiscard]] std::string getName() const;
+    [[nodiscard]] std::string getUbicacion() const;
 };
 
 

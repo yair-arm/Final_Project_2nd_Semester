@@ -6,13 +6,13 @@
 
 Usuario::Usuario(std::string nom, int cod, bool car) : nombre(std::move(nom)), codigo(cod), carnet(car){}
 
-std::string Usuario::nombre1() const {
+std::string Usuario::getName() const {
     return nombre;
 }
-int Usuario::codigo1() const {
+int Usuario::getCodigo() const {
     return codigo;
 }
-bool Usuario::carnet1() const {
+bool Usuario::hasCarnet() const {
     return carnet;
 }
 

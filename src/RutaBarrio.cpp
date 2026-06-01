@@ -20,6 +20,6 @@ const std::vector<Horario*>& RutaBarrio::getHorarios() const {
     return this->horarios;
 }
 
-std::string RutaBarrio::sector1() const {
+std::string RutaBarrio::getSector() const {
     return sector;
 }

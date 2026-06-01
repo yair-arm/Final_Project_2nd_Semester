@@ -7,23 +7,23 @@
 Conductor::Conductor(std::string idConductor, std::string nombre, std::string licencia, std::string telefono) :
 idConductor (std::move(idConductor)), nombre (std::move(nombre)),licencia (std::move(licencia)), telefono (std::move(telefono)){}
 
-std::string Conductor::id_conductor() const {
+std::string Conductor::getId() const {
     return idConductor;
 }
 
-std::string Conductor::nombre1() const {
+std::string Conductor::getName() const {
     return nombre;
 }
 
-std::string Conductor::licencia1() const {
+std::string Conductor::getLicencia() const {
     return licencia;
 }
 
-std::string Conductor::telefono1() const {
+std::string Conductor::getTelefono() const {
     return telefono;
 }
 
-Bus* Conductor::busAsignado1() const {
+Bus* Conductor::getBusAsignado() const {
     return busAsignado;
 }
 
