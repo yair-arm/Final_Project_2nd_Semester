@@ -5,16 +5,23 @@
 #include <iostream>
 
 int main() {
+    int codigoSalida = 0;
+
     try {
         SistemaTransporte::getInstance().iniciarSistema();
-        return 0;
+        std::cout << "\nPrograma finalizado. Presione cualquier tecla para cerrar...";
     } catch (const IncidenciaExcepcion& e) {
+        codigoSalida = 1;
         std::cerr << "\nERROR: " << e.infoExcepcion() << "\n";
     } catch (const std::exception& e) {
+        codigoSalida = 1;
         std::cerr << "\nERROR: " << e.what() << "\n";
     }
 
-    std::cout << "\nPresione cualquier tecla para cerrar...";
+    if (codigoSalida != 0) {
+        std::cout << "\nPresione cualquier tecla para cerrar...";
+    }
+
     _getch();
-    return 1;
+    return codigoSalida;
 }

@@ -6,8 +6,26 @@
 #include "../include/Paradero.h"
 #include "../include/Horario.h"
 #include <nlohmann/json.hpp>
+#include <filesystem>
 #include <fstream>
+#include <windows.h>
 #include "IncidenciaExepcion.h"
+
+namespace {
+std::string construirRutaDatos(const std::string& nombreArchivo) {
+    char rutaEjecutable[MAX_PATH];
+    const DWORD longitud = GetModuleFileNameA(nullptr, rutaEjecutable, MAX_PATH);
+
+    if (longitud == 0 || longitud == MAX_PATH) {
+        throw IncidenciaExcepcion("RUTA DEL EJECUTABLE NO DISPONIBLE",
+                                  "No se pudo obtener la ruta del ejecutable actual");
+    }
+
+    const std::filesystem::path carpetaEjecutable =
+        std::filesystem::path(rutaEjecutable).parent_path();
+    return (carpetaEjecutable / "data" / nombreArchivo).string();
+}
+}
 
 SistemaTransporte::SistemaTransporte() : interfazGrafica(nullptr) {}
 SistemaTransporte& SistemaTransporte::getInstance() { //Definición del metodo que accede al constructor privado y retorna la única instancia de SistemaTransporte
@@ -152,16 +170,19 @@ void SistemaTransporte::procesarYCrearBuses(const nlohmann::json &jBuses) {
 }
 
 void SistemaTransporte::cargarDatosDesdeArchivo() {
-    std::ifstream archivoRutas(ARCHIVO_RUTAS); //Se llama a la libreria ifstream, esta se encarga de crear una variable local en donde se guardará el archivo abierto
+    const std::string rutaArchivoRutas = construirRutaDatos("rutas_paraderos_horarios.json");
+    const std::string rutaArchivoBuses = construirRutaDatos("buses_conductores.json");
+
+    std::ifstream archivoRutas(rutaArchivoRutas); //Se llama a la libreria ifstream, esta se encarga de crear una variable local en donde se guardará el archivo abierto
     //Dentro del parentesis se pone el nombre del archivo que se va a abrir
-    std::ifstream archivoBuses(ARCHIVO_BUSES);
+    std::ifstream archivoBuses(rutaArchivoBuses);
 
     if (!archivoRutas.is_open()) { //Configuración de la incidencia usando la clase IncidenciaExcepcion, antes creada
-        throw IncidenciaExcepcion("ARCHIVO NO ENCONTRADO", "No se ha podido abrir el archivo " + ARCHIVO_RUTAS);
+        throw IncidenciaExcepcion("ARCHIVO NO ENCONTRADO", "No se ha podido abrir el archivo " + rutaArchivoRutas);
     }
 
     if (!archivoBuses.is_open()) {
-        throw IncidenciaExcepcion("ARCHIVO NO ENCONTRADO", "No se ha podido abrir el archivo " + ARCHIVO_BUSES);
+        throw IncidenciaExcepcion("ARCHIVO NO ENCONTRADO", "No se ha podido abrir el archivo " + rutaArchivoBuses);
     }
 
     nlohmann::json jRutas = nlohmann::json::parse(archivoRutas); //Se crea un archivo json EN LA RAM, parseando los archivos ya abiertos
