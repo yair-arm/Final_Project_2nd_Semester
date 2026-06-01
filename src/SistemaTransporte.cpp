@@ -6,7 +6,6 @@
 #include "../include/Paradero.h"
 #include "../include/Horario.h"
 #include <nlohmann/json.hpp>
-#include <filesystem>
 #include <fstream>
 #include <windows.h>
 #include "IncidenciaExepcion.h"
@@ -21,9 +20,16 @@ std::string construirRutaDatos(const std::string& nombreArchivo) {
                                   "No se pudo obtener la ruta del ejecutable actual");
     }
 
-    const std::filesystem::path carpetaEjecutable =
-        std::filesystem::path(rutaEjecutable).parent_path();
-    return (carpetaEjecutable / "data" / nombreArchivo).string();
+    const std::string rutaCompleta(rutaEjecutable);
+    const size_t posicionSeparador = rutaCompleta.find_last_of("\\/");
+
+    if (posicionSeparador == std::string::npos) {
+        throw IncidenciaExcepcion("RUTA DEL EJECUTABLE INVALIDA",
+                                  "No se pudo determinar la carpeta del ejecutable actual");
+    }
+
+    const std::string carpetaEjecutable = rutaCompleta.substr(0, posicionSeparador + 1);
+    return carpetaEjecutable + "data\\" + nombreArchivo;
 }
 }
 
