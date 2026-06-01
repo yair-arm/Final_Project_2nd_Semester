@@ -44,6 +44,10 @@ add_executable(Proyecto main.cpp
 # 4. Vincular la librería JSON descargada con tu proyecto ejecutable
 target_link_libraries(Proyecto PRIVATE nlohmann_json::nlohmann_json)
 
+if (MINGW)
+        target_link_options(Proyecto PRIVATE -static -static-libgcc -static-libstdc++)
+endif()
+
 # 5. Copiar tu carpeta de datos (JSONs) junto al ejecutable generado
 add_custom_command(TARGET Proyecto POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
