@@ -41,10 +41,13 @@ int Interfaz::obtenerMinutosActuales() {
 }
 
 void Interfaz::mostrarBienvenida() {
+    while (_kbhit()) {
+        _getch();
+    }
 
-    while (!_kbhit()) {
+    do {
         COORD pos = {0, 0};
-        SetConsoleCursorPosition(hConsole, pos);  // ← en lugar de system("cls")
+        SetConsoleCursorPosition(hConsole, pos);
         const std::time_t t = std::time(nullptr);
         const std::tm* tm = std::localtime(&t);
 
@@ -60,11 +63,11 @@ void Interfaz::mostrarBienvenida() {
         //logrando que el reloh cambie de segundo a segundo en tiempo real sin tener que saltar de linea.
 
         Sleep(1000); //esperar 1 segundo (windows.h)
-    }
+    } while (!_kbhit());
+
     _getch();
     system("cls");
-    std::cout << "Cargando el menú principal... Presione ENTER para ingresar.\n";
-    std::cin.get();
+    mostrarPantalla2_TipoRuta();
 }
 
 void Interfaz::mostrarPantalla2_TipoRuta() {
@@ -76,7 +79,7 @@ void Interfaz::mostrarPantalla2_TipoRuta() {
     std::cout << "SISTEMA DE RUTAS UNILLANOS [LUN-VIE] RELOJ: " << std::put_time(tm, "%H:%M:%S") << "\n\n\n";
     std::cout << "PASO 1 - SELECCIONE TIPO DE RUTA\n\n";
     std::cout << "[1] Ruta Centro (Directas desde Parque / Interrapidísimo)\n";
-    std::cout << "Ruta de Barrio (Circuitos Alimentadores Especiales)\n\n";
+    std::cout << "[2] Ruta de Barrio (Circuitos Alimentadores Especiales)\n\n";
     std::cout << "[0] Volver | [Q] Salir\n";
 
     char opcion;
@@ -84,9 +87,9 @@ void Interfaz::mostrarPantalla2_TipoRuta() {
 
     switch (opcion) {
         case '1': mostrarPantalla3_SentidoCentro(); break;
-            case '2': mostrarPantalla5_ListaBarrio(); break;
-            case '0': mostrarBienvenida(); break;
-            case 'Q': case 'q': break; //salir
+        case '2': mostrarPantalla5_ListaBarrio(); break;
+        case '0': mostrarBienvenida(); break;
+        case 'Q': case 'q': break; //salir
     }
 }
 
@@ -101,5 +104,4 @@ void Interfaz::mostrarPantalla5_ListaBarrio() {
     std::cout << "--- PANTALLA 5 EN DESARROLLO ---\n";
     system("pause");
 }
-
 
