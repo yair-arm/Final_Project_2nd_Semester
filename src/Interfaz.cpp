@@ -418,10 +418,33 @@ void Interfaz::mostrarPantalla4_InfoRuta(const Ruta* ruta) const {
     registrarLogConsulta("CONSULTA: Detalle de ruta " + ruta->getName());
     system("cls");
 
-    const auto& pars = ruta->getParaderos();
-    const int totalParadas = static_cast<int>(pars.size());
+    const auto& allPars = ruta->getParaderos();
     const auto* rc = dynamic_cast<const RutaCentro*>(ruta);
     const auto* rb = dynamic_cast<const RutaBarrio*>(ruta);
+
+    int totalParadas = 0;
+    std::vector<Paradero*> dirPars;
+
+    if (rc) {
+        dibujarRecuadro("SELECCIONE DIRECCION");
+        std::cout << "\n    [1] Parque de Los Estudiantes  -->  Universidad Cooperativa de Colombia\n";
+        std::cout << "    [2] Universidad Cooperativa de Colombia  -->  Parque de Los Estudiantes\n";
+        cerrarRecuadro();
+        std::cout << "\n    Opcion: ";
+        const int ch = _getch();
+        const int direccion = (ch == '2') ? 2 : 1;
+
+        if (direccion == 2) {
+            for (int i = 6; i >= 0; --i) dirPars.push_back(allPars[i]);
+        } else {
+            for (int i = 0; i < 7; ++i) dirPars.push_back(allPars[i]);
+        }
+        totalParadas = 7;
+        system("cls");
+    } else {
+        dirPars = allPars;
+        totalParadas = static_cast<int>(dirPars.size());
+    }
 
     // --- HEADER estático ---
     {
@@ -605,7 +628,7 @@ void Interfaz::mostrarPantalla4_InfoRuta(const Ruta* ruta) const {
         }
 
         if (hayBusActivo) {
-            dibujarPanelDinamico(pars, indiceParadaActual, totalParadas,
+            dibujarPanelDinamico(dirPars, indiceParadaActual, totalParadas,
                                  minutosTranscurridos, demanda,
                                  busToggle, trafficDelay, dynamicPos);
         } else {
