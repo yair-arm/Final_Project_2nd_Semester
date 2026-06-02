@@ -15,6 +15,24 @@
 #include "Paradero.h"
 #include "Horario.h"
 
+// --- Funciones auxiliares locales (no necesitan .h) ---
+static int obtenerSegundosAhora() {
+    const std::time_t t = std::time(nullptr);
+    const std::tm* tm = std::localtime(&t);
+    return tm->tm_hour * 3600 + tm->tm_min * 60 + tm->tm_sec;
+}
+
+static const char* nivelDemandaTexto(int d) {
+    if (d >= 75) return "MUY ALTA";
+    if (d >= 50) return "ALTA";
+    if (d >= 25) return "MEDIA";
+    return "BAJA";
+}
+
+static int retrasoPorDemanda(int demanda, int paradasRestantes) {
+    return (demanda / 20) * paradasRestantes;
+}
+
 // NOLINTBEGIN
 
 Interfaz::Interfaz(SistemaTransporte& sis) : sistema(sis) {
@@ -44,8 +62,17 @@ int Interfaz::obtenerMinutosActuales() {
 }
 
 int Interfaz::calcularDemanda(int hora) {
-    bool pico = (hora >= 6 && hora <= 8) || (hora >= 11 && hora <= 13) || (hora >= 16 && hora <= 18);
-    int base = pico ? 85 : 45;
+    int base;
+    if (hora >= 5 && hora <= 6)       base = 35;
+    else if (hora >= 7 && hora <= 8)  base = 85;
+    else if (hora >= 9 && hora <= 10) base = 60;
+    else if (hora >= 11 && hora <= 13) base = 80;
+    else if (hora >= 14 && hora <= 15) base = 50;
+    else if (hora >= 16 && hora <= 18) base = 90;
+    else if (hora >= 19 && hora <= 20) base = 60;
+    else if (hora >= 21)               base = 25;
+    else                               base = 20;
+
     int resultado = base + (rand() % 21 - 10);
     if (resultado < 0) resultado = 0;
     if (resultado > 100) resultado = 100;
@@ -63,21 +90,21 @@ void Interfaz::dibujarPanelDinamico(
     SetConsoleCursorPosition(hConsole, startPos);
 
     const int BAR_W = 30;
-    const int totalSegundos = totalParadas * TIEMPO_ENTRE_PARADEROS;
-    const float progreso = (totalSegundos > 0)
-        ? std::min(1.0f, static_cast<float>(minutosTranscurridos) / static_cast<float>(totalSegundos))
+    const int totalTripMinutes = totalParadas * TIEMPO_ENTRE_PARADEROS;
+    const float progreso = (totalTripMinutes > 0)
+        ? std::min(1.0f, static_cast<float>(minutosTranscurridos) / static_cast<float>(totalTripMinutes))
         : 0.0f;
     const int filled = std::min(BAR_W - 1, static_cast<int>(progreso * BAR_W));
     busToggle = !busToggle;
 
-    // ┌─ MAPA DE RUTA ──────────────────────────────────┐
     setColor(11);
     std::cout << "\t" << char(218) << char(196) << char(196) << " MAPA DE RUTA ";
     for (int i = 0; i < 37; ++i) std::cout << char(196);
     std::cout << char(191) << "\n";
     setColor(7);
 
-    // [████████████▓░░░░░░░░░░░░░░░]  65%
+    std::cout << "\t" << char(179) << "\n";
+
     std::cout << "\t" << char(179) << " ";
     for (int i = 0; i < BAR_W; ++i) {
         if (i < filled) {
@@ -95,10 +122,8 @@ void Interfaz::dibujarPanelDinamico(
     setColor(7);
     std::cout << " " << std::setw(3) << static_cast<int>(progreso * 100) << "%\n";
 
-    // Separador
     std::cout << "\t" << char(179) << "\n";
 
-    // Cabecera de paraderos
     std::cout << "\t" << char(179) << " PARADEROS:" << std::string(28, ' ') << "ESTADO     ETA\n";
 
     for (int i = 0; i < totalParadas; ++i) {
@@ -109,35 +134,43 @@ void Interfaz::dibujarPanelDinamico(
             std::cout << char(251) << " PASADO";
         } else if (i == indiceActual) {
             setColor(14);
-            std::cout << char(219) << " AHORA"
-                      << "   \x1B[5m" << char(24) << "\x1B[25m"; // flecha arriba blink ANSI
+            std::cout << char(219) << " AHORA  " << char(24);
         } else {
-            int eta = (i - indiceActual) * TIEMPO_ENTRE_PARADEROS
-                      - (minutosTranscurridos % TIEMPO_ENTRE_PARADEROS)
-                      + trafficDelay;
-            if (eta < 0) eta = 0;
+            int paradasRest = i - indiceActual;
+            int etaBase = paradasRest * TIEMPO_ENTRE_PARADEROS;
+            int etaDem = retrasoPorDemanda(demanda, paradasRest);
+            int etaTotal = etaBase + etaDem;
+            if (etaTotal < 0) etaTotal = 0;
             setColor(7);
-            std::cout << char(254) << " SIG.    en " << std::setw(2) << eta << " min";
+            std::cout << char(254) << " SIG.  en " << std::setw(2) << etaTotal << " min";
         }
         setColor(7);
         std::cout << "\n";
     }
 
-    // Demanda
+    std::cout << "\t" << char(179) << "\n";
+
     std::cout << "\t" << char(179) << " DEMANDA: ";
-    setColor(13);
     const int demBars = demanda / 10;
+    int demColor = (demanda >= 75) ? 12 : (demanda >= 50) ? 14 : (demanda >= 25) ? 14 : 10;
+    setColor(demColor);
     for (int i = 0; i < 10; ++i)
         std::cout << (i < demBars ? char(219) : char(176));
     setColor(7);
-    std::cout << " " << demanda << "%";
-    const int hh = obtenerMinutosActuales() / 60;
-    std::cout << " (" << ((hh >= 6 && hh <= 8) || (hh >= 11 && hh <= 13) || (hh >= 16 && hh <= 18) ? "Hora pico" : "Hora valle") << ")";
-    std::cout << "\n";
+    std::cout << " " << std::setw(3) << demanda << "% (" << nivelDemandaTexto(demanda) << ")\n";
 
-    if (trafficDelay > 0) {
+    int retrasoDem = retrasoPorDemanda(demanda, 1);
+    setColor(demColor);
+    std::cout << "\t" << char(179) << "    └─ Demanda " << nivelDemandaTexto(demanda)
+              << ": +" << retrasoDem << " min/paradero\n";
+    setColor(7);
+
+    if (trafficDelay > 0 || demanda >= 50) {
         setColor(12);
-        std::cout << "\t" << char(179) << " TRAFICO: Retraso aproximado de " << trafficDelay << " min\n";
+        std::cout << "\t" << char(179) << " TRÁFICO: +" << (trafficDelay > 0 ? trafficDelay : retrasoDem)
+                  << " min por demanda en hora "
+                  << ((demanda >= 50) ? "pico" : "valle") << "\n";
+        setColor(7);
     }
 
     setColor(11);
@@ -512,8 +545,7 @@ void Interfaz::mostrarPantalla4_InfoRuta(const Ruta* ruta) const {
         if (hayBusActivo) {
             const int hh = (salidaActivaMinutos / 60) % 24, mm = salidaActivaMinutos % 60;
             std::cout << "\n    SALIDA: " << (hh < 10 ? "0" : "") << hh << ":"
-                      << (mm < 10 ? "0" : "") << mm
-                      << " | " << minutosTranscurridos << " min de recorrido\n";
+                      << (mm < 10 ? "0" : "") << mm << "\n";
         }
     } else if (rb) {
         const auto& horarios = rb->getHorarios();
@@ -553,8 +585,7 @@ void Interfaz::mostrarPantalla4_InfoRuta(const Ruta* ruta) const {
             const int hh = salidaActivaMinutos / 60, mm = salidaActivaMinutos % 60;
             std::cout << "\n    BUS EN RUTA desde las "
                       << (hh < 10 ? "0" : "") << hh << ":"
-                      << (mm < 10 ? "0" : "") << mm
-                      << " (" << minutosTranscurridos << " min de viaje)\n";
+                      << (mm < 10 ? "0" : "") << mm << "\n";
             setColor(7);
         }
     }
@@ -565,7 +596,7 @@ void Interfaz::mostrarPantalla4_InfoRuta(const Ruta* ruta) const {
     CONSOLE_SCREEN_BUFFER_INFO csbi{};
     COORD dynamicPos{0,0};
     COORD relojPos{0,0};
-    int reserve = totalParadas + 8;
+    int reserve = totalParadas + 13;
 
     if (hConsole != INVALID_HANDLE_VALUE && GetConsoleScreenBufferInfo(hConsole, &csbi)) {
         dynamicPos = csbi.dwCursorPosition;
@@ -574,84 +605,316 @@ void Interfaz::mostrarPantalla4_InfoRuta(const Ruta* ruta) const {
     }
     for (int i = 0; i < reserve; ++i) std::cout << "\n";
 
-    // --- Loop dinámico ---
+    // --- Loop dinámico: actualiza segundo a segundo ---
     int lastMinute = -1;
     int trafficDelay = 0;
-    bool busToggle = false;
     int demanda = calcularDemanda(ahora / 60);
 
     while (true) {
         if (_kbhit()) break;
         actualizarReloj(relojPos.X, relojPos.Y);
 
-        ahora = obtenerMinutosActuales();
+        int ahoraMin = obtenerMinutosActuales();
+        int ahoraSeg = obtenerSegundosAhora();
 
-        if (ahora != lastMinute) {
-            lastMinute = ahora;
-            demanda = calcularDemanda(ahora / 60);
+        // Recalcular demanda y tráfico cada minuto
+        if (ahoraMin != lastMinute) {
+            lastMinute = ahoraMin;
+            demanda = calcularDemanda(ahoraMin / 60);
 
             if (hayBusActivo) {
-                if (rc) {
-                    const int freq = rc->getFrecuencia();
-                    const int inicio = rc->getHoraInicio() * 60 + rc->getMinInicio();
-                    const int fin = rc->getHoraFin() * 60 + rc->getMinFin();
-                    if (ahora >= inicio && ahora <= fin) {
-                        salidaActivaMinutos = inicio + ((ahora - inicio) / freq) * freq;
-                        if (salidaActivaMinutos > fin) { hayBusActivo = false; }
-                        else {
-                            minutosTranscurridos = ahora - salidaActivaMinutos;
-                            const int tTR = totalParadas * TIEMPO_ENTRE_PARADEROS;
-                            if (minutosTranscurridos < tTR) {
-                                indiceParadaActual = minutosTranscurridos / TIEMPO_ENTRE_PARADEROS;
-                                if (indiceParadaActual >= totalParadas) indiceParadaActual = totalParadas - 1;
-                            } else {
-                                hayBusActivo = false;
-                            }
-                        }
-                    } else {
-                        hayBusActivo = false;
-                    }
-                } else {
-                    minutosTranscurridos = ahora - salidaActivaMinutos;
-                    indiceParadaActual = minutosTranscurridos / TIEMPO_ENTRE_PARADEROS;
-                    if (indiceParadaActual >= totalParadas || minutosTranscurridos >= totalParadas * TIEMPO_ENTRE_PARADEROS) {
-                        hayBusActivo = false;
-                    }
-                }
-
-                if (trafficDelay == 0 && (rand() % 100) < 25) {
-                    trafficDelay = rand() % 10 + 1;
-                } else if (trafficDelay > 0 && (rand() % 100) < 20) {
-                    trafficDelay = std::max(0, trafficDelay - 1);
-                }
+                int retrasoBase = retrasoPorDemanda(demanda, 1);
+                trafficDelay = retrasoBase + (rand() % 3 - 1);
+                if (trafficDelay < 0) trafficDelay = 0;
             }
         }
 
         if (hayBusActivo) {
-            dibujarPanelDinamico(dirPars, indiceParadaActual, totalParadas,
-                                 minutosTranscurridos, demanda,
-                                 busToggle, trafficDelay, dynamicPos);
+            if (rc) {
+                const int freq = rc->getFrecuencia();
+                const int inicio = rc->getHoraInicio() * 60 + rc->getMinInicio();
+                const int fin = rc->getHoraFin() * 60 + rc->getMinFin();
+                if (ahoraMin >= inicio && ahoraMin <= fin) {
+                    salidaActivaMinutos = inicio + ((ahoraMin - inicio) / freq) * freq;
+                    if (salidaActivaMinutos > fin) { hayBusActivo = false; }
+                    else {
+                        int salidaSeg = salidaActivaMinutos * 60;
+                        int segundosTranscurridos = ahoraSeg - salidaSeg;
+                        if (segundosTranscurridos < 0) segundosTranscurridos = 0;
+                        minutosTranscurridos = segundosTranscurridos / 60;
+                        int tTR = totalParadas * TIEMPO_ENTRE_PARADEROS;
+                        if (minutosTranscurridos < tTR) {
+                            indiceParadaActual = minutosTranscurridos / TIEMPO_ENTRE_PARADEROS;
+                            if (indiceParadaActual >= totalParadas) indiceParadaActual = totalParadas - 1;
+
+                            if (hConsole != INVALID_HANDLE_VALUE) {
+                    SetConsoleCursorPosition(hConsole, dynamicPos);
+                    std::cout << "\x1B[J" << std::flush;
+                    CONSOLE_SCREEN_BUFFER_INFO clr{};
+                    DWORD written2 = 0;
+                    if (GetConsoleScreenBufferInfo(hConsole, &clr)) {
+                        const DWORD cellCount = static_cast<DWORD>(reserve) * static_cast<DWORD>(clr.dwSize.X);
+                        FillConsoleOutputCharacterA(hConsole, ' ', cellCount, dynamicPos, &written2);
+                        FillConsoleOutputAttribute(hConsole, clr.wAttributes, cellCount, dynamicPos, &written2);
+                    }
+                    SetConsoleCursorPosition(hConsole, dynamicPos);
+                }
+
+                            const int BAR_W = 30;
+                            const int totalTripMinutes = totalParadas * TIEMPO_ENTRE_PARADEROS;
+                            const int totalTripSeconds = totalTripMinutes * 60;
+                            const float progreso = (totalTripSeconds > 0)
+                                ? std::min(1.0f, static_cast<float>(segundosTranscurridos) / static_cast<float>(totalTripSeconds))
+                                : 0.0f;
+                            const int filled = std::min(BAR_W - 1, static_cast<int>(progreso * BAR_W));
+
+                            static bool blink = false;
+                            blink = !blink;
+
+                            setColor(11);
+                            std::cout << "\t" << char(218) << char(196) << char(196) << " MAPA DE RUTA ";
+                            for (int i = 0; i < 37; ++i) std::cout << char(196);
+                            std::cout << char(191) << "\n";
+                            setColor(7);
+
+                            std::cout << "\t" << char(179) << "\n";
+
+                            std::cout << "\t" << char(179) << " ";
+                            for (int i = 0; i < BAR_W; ++i) {
+                                if (i < filled) {
+                                    setColor(10);
+                                    std::cout << char(219);
+                                } else if (i == filled) {
+                                    setColor(14);
+                                    std::cout << (blink ? char(219) : char(177));
+                                    setColor(7);
+                                } else {
+                                    setColor(8);
+                                    std::cout << char(176);
+                                }
+                            }
+                            setColor(7);
+                            std::cout << " " << std::setw(3) << static_cast<int>(progreso * 100) << "%\n";
+
+                            std::cout << "\t" << char(179) << "\n";
+                            std::cout << "\t" << char(179) << " VIAJE: "
+                                      << (segundosTranscurridos / 60) << "m "
+                                      << (segundosTranscurridos % 60) << "s\n";
+                            std::cout << "\t" << char(179) << " PARADEROS:" << std::string(28, ' ') << "ESTADO     ETA\n";
+
+                            for (int i = 0; i < totalParadas; ++i) {
+                                std::cout << "\t" << char(179) << "  " << std::setw(2) << (i+1) << ". "
+                                          << std::left << std::setw(34) << dirPars[i]->getName();
+                                if (i < indiceParadaActual) {
+                                    setColor(8);
+                                    std::cout << char(251) << " PASADO";
+                                } else if (i == indiceParadaActual) {
+                                    setColor(14);
+                                    std::cout << char(219) << " AHORA  " << char(24);
+                                } else {
+                                    int paradasRest = i - indiceParadaActual;
+                                    int segEnSeg = segundosTranscurridos % (TIEMPO_ENTRE_PARADEROS * 60);
+                                    int etaBase = paradasRest * TIEMPO_ENTRE_PARADEROS - (segEnSeg / 60);
+                                    if (etaBase < 0) etaBase = 0;
+                                    int etaDem = retrasoPorDemanda(demanda, paradasRest);
+                                    int etaTotal = etaBase + etaDem;
+                                    if (etaTotal < 0) etaTotal = 0;
+                                    setColor(7);
+                                    std::cout << char(254) << " SIG.  en " << std::setw(2) << etaTotal << " min";
+                                }
+                                setColor(7);
+                                std::cout << "\n";
+                            }
+
+                            std::cout << "\t" << char(179) << "\n";
+                            std::cout << "\t" << char(179) << " DEMANDA: ";
+                            const int demBars = demanda / 10;
+                            int demColor = (demanda >= 75) ? 12 : (demanda >= 50) ? 14 : (demanda >= 25) ? 14 : 10;
+                            setColor(demColor);
+                            for (int i = 0; i < 10; ++i)
+                                std::cout << (i < demBars ? char(219) : char(176));
+                            setColor(7);
+                            std::cout << " " << std::setw(3) << demanda << "% (" << nivelDemandaTexto(demanda) << ")\n";
+
+                            int retrasoXParada = retrasoPorDemanda(demanda, 1);
+                            setColor(demColor);
+                            std::cout << "\t" << char(179) << "    └─ Demanda " << nivelDemandaTexto(demanda)
+                                      << ": +" << retrasoXParada << " min/paradero\n";
+                            setColor(7);
+
+                            if (trafficDelay > 0 || demanda >= 50) {
+                                setColor(12);
+                                std::cout << "\t" << char(179) << " TRÁFICO: +" << (trafficDelay > 0 ? trafficDelay : retrasoXParada)
+                                          << " min por demanda en hora "
+                                          << ((demanda >= 50) ? "pico" : "valle") << "\n";
+                                setColor(7);
+                            }
+
+                            setColor(11);
+                            std::cout << "\t" << char(192);
+                            for (int i = 0; i < 49; ++i) std::cout << char(196);
+                            std::cout << char(217) << "\n";
+                            setColor(7);
+                            std::cout << std::flush;
+                        } else {
+                            hayBusActivo = false;
+                        }
+                    }
+                } else {
+                    hayBusActivo = false;
+                }
+            } else {
+                int salidaSeg = salidaActivaMinutos * 60;
+                int segundosTranscurridos = ahoraSeg - salidaSeg;
+                if (segundosTranscurridos < 0) segundosTranscurridos = 0;
+                minutosTranscurridos = segundosTranscurridos / 60;
+                indiceParadaActual = minutosTranscurridos / TIEMPO_ENTRE_PARADEROS;
+                if (indiceParadaActual >= totalParadas || minutosTranscurridos >= totalParadas * TIEMPO_ENTRE_PARADEROS) {
+                    hayBusActivo = false;
+                } else {
+                    if (hConsole != INVALID_HANDLE_VALUE) {
+                    SetConsoleCursorPosition(hConsole, dynamicPos);
+                    std::cout << "\x1B[J" << std::flush;
+                    CONSOLE_SCREEN_BUFFER_INFO clr{};
+                    DWORD written2 = 0;
+                    if (GetConsoleScreenBufferInfo(hConsole, &clr)) {
+                        const DWORD cellCount = static_cast<DWORD>(reserve) * static_cast<DWORD>(clr.dwSize.X);
+                        FillConsoleOutputCharacterA(hConsole, ' ', cellCount, dynamicPos, &written2);
+                        FillConsoleOutputAttribute(hConsole, clr.wAttributes, cellCount, dynamicPos, &written2);
+                    }
+                    SetConsoleCursorPosition(hConsole, dynamicPos);
+                }
+
+                    const int BAR_W = 30;
+                    const int totalTripMinutes = totalParadas * TIEMPO_ENTRE_PARADEROS;
+                    const int totalTripSeconds = totalTripMinutes * 60;
+                    const float progreso = (totalTripSeconds > 0)
+                        ? std::min(1.0f, static_cast<float>(segundosTranscurridos) / static_cast<float>(totalTripSeconds))
+                        : 0.0f;
+                    const int filled = std::min(BAR_W - 1, static_cast<int>(progreso * BAR_W));
+
+                    static bool blink = false;
+                    blink = !blink;
+
+                    setColor(11);
+                    std::cout << "\t" << char(218) << char(196) << char(196) << " MAPA DE RUTA ";
+                    for (int i = 0; i < 37; ++i) std::cout << char(196);
+                    std::cout << char(191) << "\n";
+                    setColor(7);
+
+                    std::cout << "\t" << char(179) << "\n";
+
+                    std::cout << "\t" << char(179) << " ";
+                    for (int i = 0; i < BAR_W; ++i) {
+                        if (i < filled) {
+                            setColor(10);
+                            std::cout << char(219);
+                        } else if (i == filled) {
+                            setColor(14);
+                            std::cout << (blink ? char(219) : char(177));
+                            setColor(7);
+                        } else {
+                            setColor(8);
+                            std::cout << char(176);
+                        }
+                    }
+                    setColor(7);
+                    std::cout << " " << std::setw(3) << static_cast<int>(progreso * 100) << "%\n";
+
+                    std::cout << "\t" << char(179) << "\n";
+                    std::cout << "\t" << char(179) << " VIAJE: "
+                              << (segundosTranscurridos / 60) << "m "
+                              << (segundosTranscurridos % 60) << "s\n";
+                    std::cout << "\t" << char(179) << " PARADEROS:" << std::string(28, ' ') << "ESTADO     ETA\n";
+
+                    for (int i = 0; i < totalParadas; ++i) {
+                        std::cout << "\t" << char(179) << "  " << std::setw(2) << (i+1) << ". "
+                                  << std::left << std::setw(34) << dirPars[i]->getName();
+                        if (i < indiceParadaActual) {
+                            setColor(8);
+                            std::cout << char(251) << " PASADO";
+                        } else if (i == indiceParadaActual) {
+                            setColor(14);
+                            std::cout << char(219) << " AHORA  " << char(24);
+                        } else {
+                            int paradasRest = i - indiceParadaActual;
+                            int segEnSeg = segundosTranscurridos % (TIEMPO_ENTRE_PARADEROS * 60);
+                            int etaBase = paradasRest * TIEMPO_ENTRE_PARADEROS - (segEnSeg / 60);
+                            if (etaBase < 0) etaBase = 0;
+                            int etaDem = retrasoPorDemanda(demanda, paradasRest);
+                            int etaTotal = etaBase + etaDem;
+                            if (etaTotal < 0) etaTotal = 0;
+                            setColor(7);
+                            std::cout << char(254) << " SIG.  en " << std::setw(2) << etaTotal << " min";
+                        }
+                        setColor(7);
+                        std::cout << "\n";
+                    }
+
+                    std::cout << "\t" << char(179) << "\n";
+                    std::cout << "\t" << char(179) << " DEMANDA: ";
+                    const int demBars = demanda / 10;
+                    int demColor = (demanda >= 75) ? 12 : (demanda >= 50) ? 14 : (demanda >= 25) ? 14 : 10;
+                    setColor(demColor);
+                    for (int i = 0; i < 10; ++i)
+                        std::cout << (i < demBars ? char(219) : char(176));
+                    setColor(7);
+                    std::cout << " " << std::setw(3) << demanda << "% (" << nivelDemandaTexto(demanda) << ")\n";
+
+                    int retrasoXParada = retrasoPorDemanda(demanda, 1);
+                    setColor(demColor);
+                    std::cout << "\t" << char(179) << "    └─ Demanda " << nivelDemandaTexto(demanda)
+                              << ": +" << retrasoXParada << " min/paradero\n";
+                    setColor(7);
+
+                    if (trafficDelay > 0 || demanda >= 50) {
+                        setColor(12);
+                        std::cout << "\t" << char(179) << " TRÁFICO: +" << (trafficDelay > 0 ? trafficDelay : retrasoXParada)
+                                  << " min por demanda en hora "
+                                  << ((demanda >= 50) ? "pico" : "valle") << "\n";
+                        setColor(7);
+                    }
+
+                    setColor(11);
+                    std::cout << "\t" << char(192);
+                    for (int i = 0; i < 49; ++i) std::cout << char(196);
+                    std::cout << char(217) << "\n";
+                    setColor(7);
+                    std::cout << std::flush;
+                }
+            }
         } else {
-            if (hConsole != INVALID_HANDLE_VALUE) SetConsoleCursorPosition(hConsole, dynamicPos);
+            if (hConsole != INVALID_HANDLE_VALUE) {
+                    SetConsoleCursorPosition(hConsole, dynamicPos);
+                    std::cout << "\x1B[J" << std::flush;
+                    CONSOLE_SCREEN_BUFFER_INFO clr{};
+                    DWORD written2 = 0;
+                    if (GetConsoleScreenBufferInfo(hConsole, &clr)) {
+                        const DWORD cellCount = static_cast<DWORD>(reserve) * static_cast<DWORD>(clr.dwSize.X);
+                        FillConsoleOutputCharacterA(hConsole, ' ', cellCount, dynamicPos, &written2);
+                        FillConsoleOutputAttribute(hConsole, clr.wAttributes, cellCount, dynamicPos, &written2);
+                    }
+                    SetConsoleCursorPosition(hConsole, dynamicPos);
+                }
             int proxSalida = 0, proxDiff = 0;
             if (rc) {
                 const int freq = rc->getFrecuencia();
                 const int inicio = rc->getHoraInicio() * 60 + rc->getMinInicio();
                 const int fin = rc->getHoraFin() * 60 + rc->getMinFin();
-                if (ahora < inicio) {
-                    proxSalida = inicio; proxDiff = inicio - ahora;
-                } else if (ahora >= fin) {
-                    proxSalida = inicio + 1440; proxDiff = inicio + 1440 - ahora;
+                if (ahoraMin < inicio) {
+                    proxSalida = inicio; proxDiff = inicio - ahoraMin;
+                } else if (ahoraMin >= fin) {
+                    proxSalida = inicio + 1440; proxDiff = inicio + 1440 - ahoraMin;
                 } else {
-                    proxSalida = inicio + ((ahora - inicio) / freq + 1) * freq;
+                    proxSalida = inicio + ((ahoraMin - inicio) / freq + 1) * freq;
                     if (proxSalida > fin) proxSalida = fin;
-                    proxDiff = proxSalida - ahora;
+                    proxDiff = proxSalida - ahoraMin;
                 }
             } else if (rb) {
                 int minD = 1440;
                 for (const auto* h : rb->getHorarios()) {
                     const int tm = tiempoAMinutos(std::stoi(h->getHora()), std::stoi(h->getMinuto()));
-                    int d = tm - ahora;
+                    int d = tm - ahoraMin;
                     if (d < 0) d += 1440;
                     if (d < minD) { minD = d; proxSalida = tm; proxDiff = d; }
                 }
@@ -664,9 +927,10 @@ void Interfaz::mostrarPantalla4_InfoRuta(const Ruta* ruta) const {
                       << (mm < 10 ? "0" : "") << mm
                       << " (en " << proxDiff << " min)\n";
             setColor(7);
+            std::cout << std::flush;
         }
 
-        Sleep(400);
+        Sleep(1000);
     }
 
     registrarLogConsulta("MENU: Usuario salio del modo en vivo de " + ruta->getName());
@@ -674,22 +938,16 @@ void Interfaz::mostrarPantalla4_InfoRuta(const Ruta* ruta) const {
     system("cls");
 
     dibujarRecuadro("OPCIONES");
-    std::cout << "\n    [R] Refrescar datos en tiempo real\n";
+    std::cout << "\n    [1] Ver informacion de buses y conductores\n";
     std::cout << "    [0] Volver al menu principal\n";
     std::cout << "    [Q] Salir del sistema\n";
-    if (ruta->isActive()) std::cout << "    [1] Ver informacion de buses y conductores\n";
     cerrarRecuadro();
     std::cout << "\n    Seleccione una opcion: ";
 
     const int sel = _getch();
     switch (sel) {
-        case 'r': case 'R':
-            system("cls");
-            mostrarPantalla4_InfoRuta(ruta);
-            return;
         case '0':
             system("cls");
-            mostrarBienvenida();
             return;
         case 'q': case 'Q':
             exit(0);
