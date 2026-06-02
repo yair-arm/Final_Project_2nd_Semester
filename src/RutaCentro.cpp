@@ -17,3 +17,8 @@ int RutaCentro::getFrecuencia() const {
     return frecuencia;
 }
 
+int RutaCentro::getHoraInicio() const { return horaInicio; }
+int RutaCentro::getMinInicio() const { return minInicio; }
+int RutaCentro::getHoraFin() const { return horaFin; }
+int RutaCentro::getMinFin() const { return minFin; }
+

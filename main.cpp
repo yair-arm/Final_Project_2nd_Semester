@@ -1,5 +1,5 @@
 #include "../include/SistemaTransporte.h"
-#include "../include/IncidenciaExepcion.h"
+#include "../include/IncidenciaExcepcion.h"
 #include <conio.h>
 #include <exception>
 #include <iostream>

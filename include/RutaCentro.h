@@ -9,19 +9,24 @@
 
 class RutaCentro : public Ruta {
 private:
-    // 1. Constructor privado: nadie fuera de esta clase puede crear una instancia
     RutaCentro();
     int frecuencia = 30;
+    int horaInicio = 5;
+    int minInicio = 20;
+    int horaFin = 19;
+    int minFin = 10;
 public:
-    // 2. Metodo estatico para obtener la única instancia
     static RutaCentro& getInstance();
 
-    // Evitar que se copie la instancia
     RutaCentro(const RutaCentro&) = delete;
     void operator=(const RutaCentro&) = delete;
     ~RutaCentro() override = default;
 
     [[nodiscard]] int getFrecuencia() const;
+    [[nodiscard]] int getHoraInicio() const;
+    [[nodiscard]] int getMinInicio() const;
+    [[nodiscard]] int getHoraFin() const;
+    [[nodiscard]] int getMinFin() const;
 };
 
 #endif //PROYECTO_RUTACENTRO_H

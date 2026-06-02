@@ -8,9 +8,11 @@
 #include <windows.h>
 #include <iostream>
 #include <string>
+#include <vector>
 
 class SistemaTransporte; //Forward Declaration
 class Ruta; //Forward Declaration
+class Paradero; //Forward Declaration
 class Interfaz {
 private:
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); //Control remoto para lograr cambiar cosas visuales de la consola
@@ -26,6 +28,12 @@ private:
     static void imprimirSugerencia(const std::string& texto);
     // Actualiza el reloj en la posición (x,y) sin redibujar toda la pantalla
     void actualizarReloj(int x, int y) const;
+    static int calcularDemanda(int hora);
+    void dibujarPanelDinamico(const std::vector<Paradero*>& paraderos,
+                              int indiceActual, int totalParadas,
+                              int minutosTranscurridos, int demanda,
+                              bool& busToggle, int trafficDelay,
+                              COORD startPos) const;
 
 
 public:
