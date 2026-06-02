@@ -427,8 +427,8 @@ void Interfaz::mostrarPantalla4_InfoRuta(const Ruta* ruta) const {
 
     if (rc) {
         dibujarRecuadro("SELECCIONE DIRECCION");
-        std::cout << "\n    [1] Parque de Los Estudiantes  -->  Universidad Cooperativa de Colombia\n";
-        std::cout << "    [2] Universidad Cooperativa de Colombia  -->  Parque de Los Estudiantes\n";
+        std::cout << "\n    [1] Parque de Los Estudiantes  -->  Universidad de los Llanos\n";
+        std::cout << "    [2] Universidad de los Llanos  -->  Parque de Los Estudiantes\n";
         cerrarRecuadro();
         std::cout << "\n    Opcion: ";
         const int ch = _getch();
