@@ -59,4 +59,7 @@ El binario se genera en `cmake-build-debug/`. Al ejecutarlo, busca la carpeta `d
 
 ## Créditos
 
-Yair Armando Ospino Herrera — Segundo Semestre, Programación Orientada a Objetos, Corte III.
+Yair Armando Ospino Herrera
+Nicolle Dahian Fernandez Wilson
+
+Segundo Semestre, Programación Orientada a Objetos, Corte III.
